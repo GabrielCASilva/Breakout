@@ -5,7 +5,7 @@
 #include "Utils/Constants.h"
 
 auto BrickLoader::SetPatternToLoad(const std::string &pattern) -> std::string {
-    return game::ROOT + "assets/grids_layout/" + pattern;
+    return game::ROOT + "assets/grids_layout/" + pattern + ".txt";
 }
 
 

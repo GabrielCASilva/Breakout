@@ -12,7 +12,7 @@ auto GameScreen::Init() -> void {
     paddle = std::make_unique<Paddle>(paddle_position);
     ball = std::make_unique<Ball>(ball_position);
 
-    const auto file {BrickLoader::SetPatternToLoad("layout_1.txt")};
+    const auto file {BrickLoader::SetPatternToLoad("layout_1")};
     auto level_layout1 {BrickLoader::LoadFromFile(file)};
 
     level = std::make_unique<BrickSet>(level_layout1);
