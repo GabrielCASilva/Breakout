@@ -3,12 +3,13 @@
 #include <raylib.h>
 
 #include "Screens/GameScreen.h"
-#include "Screens/MenuScreen.h"
 #include "Screens/ScreenManager.h"
+#include "Utils/TextureLoader.h"
 
 auto Game::Initialize(const int width, const int height, const std::string &title) -> void {
     assert(!GetWindowHandle());
     InitWindow(width, height, title.c_str());
+    TextureLoader::Load("bricks1");
     ScreenManager::ChangeScreen(std::make_unique<GameScreen>());
 }
 

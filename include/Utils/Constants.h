@@ -17,20 +17,13 @@ namespace game
     namespace grid {
         constexpr Color COLOR{255,255,255,50};
         constexpr std::uint8_t SIZE{32};
-        constexpr std::uint8_t MARGIN_UP{3};
+        constexpr std::uint8_t MARGIN_UP{2};
         constexpr std::uint8_t MARGIN_DOWN{6};
         constexpr std::uint8_t MARGIN_LEFT{2};
         constexpr std::uint8_t MARGIN_RIGHT{2};
 
-        constexpr int OFFSET_UP{SIZE};
-        constexpr int OFFSET_DOWN{SIZE * 2};
-        constexpr int OFFSET_LEFT{SIZE};
-        constexpr int OFFSET_RIGHT{SIZE * 2};
-
-        constexpr int COLS{(WINDOW_WIDTH - OFFSET_RIGHT * MARGIN_RIGHT) / SIZE};
-        constexpr int ROWS{(WINDOW_HEIGHT - OFFSET_DOWN * MARGIN_DOWN) / SIZE};
-
-        constexpr std::size_t MAX_CELLS{ROWS * COLS};
+        constexpr int COLS = (WINDOW_WIDTH - (MARGIN_LEFT * MARGIN_RIGHT) * SIZE) / SIZE;
+        constexpr int ROWS = (WINDOW_HEIGHT - (MARGIN_UP * MARGIN_DOWN) * SIZE) / SIZE;
     } // namespace grid
 } // namespace game
 

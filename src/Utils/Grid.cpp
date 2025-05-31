@@ -5,6 +5,8 @@
 
 auto Grid::Draw() -> void {
     LoopInsideGrid([](const int row, const int col, const int x, const int y) -> void {
-         DrawRectangleLines(x, y, game::grid::SIZE, game::grid::SIZE, game::grid::COLOR);
+
+        DrawRectangle(x+1, y+1, game::grid::SIZE-1, game::grid::SIZE-1, game::grid::COLOR);
+        DrawRectangleLines(x+1, y+1, game::grid::SIZE-1, game::grid::SIZE-1, BLACK);
     });
 }

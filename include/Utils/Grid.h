@@ -13,8 +13,8 @@ public:
     static auto LoopInsideGrid(Func &&callback) -> void {
         for (int row{0}; row < game::grid::ROWS; ++row) {
             for (int col{0}; col < game::grid::COLS; ++col) {
-                const int x{(game::grid::OFFSET_LEFT * game::grid::MARGIN_LEFT) + col * game::grid::SIZE};
-                const int y{(game::grid::OFFSET_UP * game::grid::MARGIN_UP) + row * game::grid::SIZE};
+                int x {(game::grid::MARGIN_LEFT * game::grid::SIZE) + col * game::grid::SIZE};
+                int y {(game::grid::MARGIN_UP * game::grid::SIZE) + row * game::grid::SIZE};
                 callback(row, col, x, y);
             }
         }
