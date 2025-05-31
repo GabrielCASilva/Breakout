@@ -7,23 +7,33 @@
 
 class Grid {
 public:
-    static std::uint8_t cell_size;
-    static int offset_up;
-    static int offset_down;
-    static int offset_left;
-    static int offset_right;
-    static int cols;
-    static int rows;
-
     static auto Draw() -> void;
 
     template<std::invocable<int, int, int, int> Func>
     static auto LoopInsideGrid(Func &&callback) -> void {
-        for (int row {0}; row < rows; ++row) {
-            for (int col {0}; col < cols; ++col) {
-                const int x {(offset_left * game::grid::MARGIN_LEFT) + col * cell_size};
-                const int y {(offset_up * game::grid::MARGIN_UP) + row * cell_size};
+        for (int row{0}; row < game::grid::ROWS; ++row) {
+            for (int col{0}; col < game::grid::COLS; ++col) {
+                const int x{(game::grid::OFFSET_LEFT * game::grid::MARGIN_LEFT) + col * game::grid::SIZE};
+                const int y{(game::grid::OFFSET_UP * game::grid::MARGIN_UP) + row * game::grid::SIZE};
                 callback(row, col, x, y);
+            }
+        }
+    }
+
+    template<std::invocable<int, int> Func>
+    static auto LoopInsideGrid(Func &&callback) -> void {
+        for (int row{0}; row < game::grid::ROWS; ++row) {
+            for (int col{0}; col < game::grid::COLS; ++col) {
+                callback(row, col);
+            }
+        }
+    }
+
+    template<std::invocable Func>
+    static auto LoopInsideGrid(Func &&callback) -> void {
+        for (int row{0}; row < game::grid::ROWS; ++row) {
+            for (int col{0}; col < game::grid::COLS; ++col) {
+                callback();
             }
         }
     }

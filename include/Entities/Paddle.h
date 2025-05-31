@@ -18,6 +18,6 @@ public:
     Paddle& operator=(const Paddle& other) = delete;
 
     auto Update(float dt) -> void override;
-    auto Draw() -> void override;
+    auto Draw() const -> void override;
 };
 #endif //PADDLE_H

@@ -20,7 +20,7 @@ public:
     Ball& operator=(const Ball& other) = delete;
 
     auto Update(float dt) -> void override;
-    auto Draw() -> void override;
+    auto Draw() const -> void override;
 };
 
 #endif //BALL_H

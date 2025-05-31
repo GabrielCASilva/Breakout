@@ -16,6 +16,7 @@ auto GameScreen::Init() -> void {
     auto level_layout1 {BrickLoader::LoadFromFile(file)};
 
     level = std::make_unique<BrickSet>(level_layout1);
+    level->InitializeBricks();
 }
 
 auto GameScreen::Update(const float dt) -> void {

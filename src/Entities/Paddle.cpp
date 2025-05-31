@@ -6,11 +6,9 @@ Paddle::Paddle() : position{}, velocity{}, size{_size}, color{WHITE}, speed{}{}
 Paddle::Paddle(const Vector2 position) : position {position},
     velocity{}, size{_size}, color{WHITE}, speed{}{}
 
+auto Paddle::Update(float dt) -> void {}
 
-auto Paddle::Update(float dt) -> void {
-}
-
-auto Paddle::Draw() -> void {
+auto Paddle::Draw() const -> void {
     const auto pos_x {static_cast<int>(position.x)};
     const auto pos_y {static_cast<int>(position.y)};
     const auto width {static_cast<int>(size.x)};
