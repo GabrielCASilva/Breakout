@@ -1,6 +1,8 @@
 #ifndef BRICK_H
 #define BRICK_H
 #include <cstdint>
+#include <vector>
+#include <ostream>
 
 #include "IEntity.h"
 #include "raylib.h"
@@ -21,11 +23,22 @@ enum class BrickTypes : uint8_t {
     Storager
 };
 
+enum class BrickLengths : uint8_t {
+    Single,
+    Multiple,
+};
+
 class Brick final : public IEntity {
+    friend std::ostream &operator<<(std::ostream &os, const Brick &brick);
+
+private:
     BrickTypes type;
+    BrickLengths length;
     std::uint8_t size;
     Vector2 position;
     Color color;
+
+    std::vector<int> sprite_positions;
 
 public:
     Brick();
@@ -34,7 +47,17 @@ public:
     auto Draw() const -> void override;
 
     auto Collider() -> void;
+
     auto SetPosition(const Vector2 &pos) -> void;
+    auto GetPosition() const -> Vector2;
+
+    auto AddSize() -> void;
+
+    auto PushSpritePositions(int x) -> void;
+    auto GetSpritePositions() const -> std::vector<int>;
+
+    auto SetLength(BrickLengths l) -> void;
+    auto GetLength() const -> BrickLengths;
 };
 
 #endif //BRICK_H

@@ -10,7 +10,8 @@
 
 class BrickSet {
     std::vector<std::string> layout;
-    std::array<std::array<std::unique_ptr<Brick>, game::grid::COLS>, game::grid::ROWS> bricks;
+
+    std::vector<std::unique_ptr<Brick>> bricks;
 
 public:
     explicit BrickSet(const std::vector<std::string> &layout);
