@@ -31,13 +31,14 @@ enum class BrickLengths : uint8_t {
 class Brick final : public IEntity {
     friend std::ostream &operator<<(std::ostream &os, const Brick &brick);
 
-private:
     BrickTypes type;
     BrickLengths length;
     std::uint8_t size;
     Vector2 position;
     Color color;
+    bool is_destroyed;
 
+    Rectangle rect_area;
     std::vector<int> sprite_positions;
 
 public:
@@ -47,6 +48,9 @@ public:
     auto Draw() const -> void override;
 
     auto Collider() -> void;
+
+    auto Destroy() -> void;
+    auto IsDestroyed() const -> bool;
 
     auto SetPosition(const Vector2 &pos) -> void;
     auto GetPosition() const -> Vector2;
@@ -58,6 +62,10 @@ public:
 
     auto SetLength(BrickLengths l) -> void;
     auto GetLength() const -> BrickLengths;
+
+    auto SetRectangle(const Rectangle &r) -> void;
+    auto GetRectangle() const -> Rectangle;
+    auto IncreaseRectangle() -> void;
 };
 
 #endif //BRICK_H

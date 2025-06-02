@@ -1,5 +1,6 @@
 #include "Bricks/BrickSet.h"
 
+#include <algorithm>
 #include <iostream>
 #include <memory>
 #include <bits/ostream.tcc>
@@ -24,6 +25,7 @@ auto BrickSet::InitializeBricks() -> void {
         if (tile == '0') {
             auto brick = std::make_unique<Brick>();
             brick->SetLength(BrickLengths::Single);
+            brick->SetRectangle({static_cast<float>(x), static_cast<float>(y), game::grid::SIZE, game::grid::SIZE});
             brick->SetPosition(Vector2{static_cast<float>(x), static_cast<float>(y)});
             brick->PushSpritePositions(x);
             bricks.push_back(std::move(brick));
@@ -32,10 +34,11 @@ auto BrickSet::InitializeBricks() -> void {
 
         if (tile == '1') {
             if (!bricks.empty() && bricks.back()->GetLength() == BrickLengths::Multiple) {
-                const auto &last_brick_position {bricks.back()->GetSpritePositions()};
+                const auto &last_brick_position{bricks.back()->GetSpritePositions()};
                 if (const int lastBrickRightEdge{last_brick_position.back() + 32};
                     lastBrickRightEdge == x) {
                     bricks.back()->SetLength(BrickLengths::Multiple);
+                    bricks.back()->IncreaseRectangle();
                     bricks.back()->PushSpritePositions(x);
                     return;
                 }
@@ -43,6 +46,7 @@ auto BrickSet::InitializeBricks() -> void {
 
             auto brick = std::make_unique<Brick>();
             brick->SetLength(BrickLengths::Multiple);
+            brick->SetRectangle({static_cast<float>(x), static_cast<float>(y), game::grid::SIZE, game::grid::SIZE});
             brick->SetPosition(Vector2{static_cast<float>(x), static_cast<float>(y)});
             brick->PushSpritePositions(x);
             bricks.push_back(std::move(brick));
@@ -53,5 +57,20 @@ auto BrickSet::InitializeBricks() -> void {
 auto BrickSet::Draw() const -> void {
     for (const auto &brick: bricks) {
         brick->Draw();
+    }
+}
+
+auto BrickSet::SafalyDestroyBricks() -> void {
+    std::erase_if(bricks,
+                  [](const std::unique_ptr<Brick>& brick) {
+                      return brick->IsDestroyed();
+                  });
+}
+
+auto BrickSet::OnCollision(const Ball &ball) -> void {
+    for (const auto &brick: bricks) {
+        if (ball.CheckCollisionWithBrick(*brick)) {
+            brick->Destroy();
+        }
     }
 }

@@ -6,7 +6,8 @@
 #include "Utils/Grid.h"
 #include "Utils/TextureLoader.h"
 
-Brick::Brick() : type{BrickTypes::Default}, length{}, size{1}, position{}, color{WHITE} {
+Brick::Brick() : type{BrickTypes::Default}, length{}, size{1}, position{}, color{WHITE}, is_destroyed{false},
+                 rect_area{} {
 }
 
 auto Brick::Update(float dt) -> void {}
@@ -61,6 +62,27 @@ auto Brick::GetLength() const -> BrickLengths {
 auto Brick::SetLength(const BrickLengths l) -> void {
     length = l;
 }
+
+auto Brick::GetRectangle() const -> Rectangle {
+    return rect_area;
+}
+
+auto Brick::SetRectangle(const Rectangle &r) -> void {
+    rect_area = r;
+}
+
+auto Brick::IncreaseRectangle() -> void {
+    rect_area.width += 32;
+}
+
+auto Brick::Destroy() -> void {
+    is_destroyed = true;
+}
+
+auto Brick::IsDestroyed() const -> bool {
+    return is_destroyed;
+}
+
 
 // Friends
 std::ostream& operator<<(std::ostream& os, const Brick& brick) {

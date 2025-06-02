@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "Entities/Ball.h"
 #include "Entities/Brick.h"
 #include "Utils/Grid.h"
 
@@ -19,6 +20,11 @@ public:
     ~BrickSet() = default;
     auto InitializeBricks() -> void;
     auto Draw() const -> void;
+
+    auto SafalyDestroyBricks() -> void;
+
+    // collision
+    auto OnCollision(const Ball& ball) -> void;
 };
 
 #endif //LEVEL_H

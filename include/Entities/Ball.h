@@ -2,6 +2,7 @@
 #define BALL_H
 #include <cstdint>
 
+#include "Brick.h"
 #include "IEntity.h"
 #include "raylib.h"
 
@@ -21,6 +22,9 @@ public:
 
     auto Update(float dt) -> void override;
     auto Draw() const -> void override;
+
+    // collision detection
+    auto CheckCollisionWithBrick(const Brick& brick) const -> bool;
 };
 
 #endif //BALL_H

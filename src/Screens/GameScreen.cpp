@@ -21,12 +21,16 @@ auto GameScreen::Init() -> void {
 
 auto GameScreen::Update(const float dt) -> void {
     paddle->Update(dt);
+    ball->Update(dt);
+    level->OnCollision(*ball);
+
+    level->SafalyDestroyBricks();
 }
 
 auto GameScreen::Draw() -> void {
     Grid::Draw();
     // paddle->Draw();
-    // ball->Draw();
+    ball->Draw();
     level->Draw();
 }
 auto GameScreen::Exit() -> void {
