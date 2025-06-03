@@ -6,8 +6,8 @@
 #include "Utils/Grid.h"
 
 auto GameScreen::Init() -> void {
-    Vector2 paddle_position {game::WINDOW_WIDTH/2, game::WINDOW_HEIGHT - 100};
-    Vector2 ball_position {game::WINDOW_WIDTH/2, game::WINDOW_HEIGHT/2};
+    Vector2 paddle_position {game::WINDOW_WIDTH/2 - 48, game::WINDOW_HEIGHT - 100};
+    Vector2 ball_position {game::WINDOW_WIDTH/2, game::WINDOW_HEIGHT - 200};
 
     paddle = std::make_unique<Paddle>(paddle_position);
     ball = std::make_unique<Ball>(ball_position);
@@ -29,10 +29,11 @@ auto GameScreen::Update(const float dt) -> void {
 
 auto GameScreen::Draw() -> void {
     Grid::Draw();
-    // paddle->Draw();
+    paddle->Draw();
     ball->Draw();
     level->Draw();
 }
+
 auto GameScreen::Exit() -> void {
 
 }

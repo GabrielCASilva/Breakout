@@ -11,9 +11,10 @@
 
 class BrickSet {
     std::vector<std::string> layout;
-
     std::vector<std::unique_ptr<Brick>> bricks;
 
+    auto CreateOrUpdateBrick(const BrickTypes& type, const BrickLengths& len, const int x, const int y) -> void;
+    auto FactoryBrick(const char& tile, const int x, const int y) -> void;
 public:
     explicit BrickSet(const std::vector<std::string> &layout);
 
@@ -24,7 +25,7 @@ public:
     auto SafalyDestroyBricks() -> void;
 
     // collision
-    auto OnCollision(const Ball& ball) -> void;
+    auto OnCollision(const Ball& ball) const -> void;
 };
 
 #endif //LEVEL_H

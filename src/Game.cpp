@@ -9,7 +9,7 @@
 auto Game::Initialize(const int width, const int height, const std::string &title) -> void {
     assert(!GetWindowHandle());
     InitWindow(width, height, title.c_str());
-    TextureLoader::Load("bricks1");
+    TextureLoader::Load("bricks");
     ScreenManager::ChangeScreen(std::make_unique<GameScreen>());
 }
 

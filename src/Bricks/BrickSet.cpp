@@ -1,9 +1,8 @@
 #include "Bricks/BrickSet.h"
 
 #include <algorithm>
-#include <iostream>
 #include <memory>
-#include <bits/ostream.tcc>
+#include <iostream>
 
 #include "Utils/Grid.h"
 #include "Entities/Brick.h"
@@ -21,37 +20,45 @@ auto BrickSet::InitializeBricks() -> void {
         const char tile = line[col];
         if (tile == '.') return;
 
-        //TODO: REFATORAR
-        if (tile == '0') {
-            auto brick = std::make_unique<Brick>();
-            brick->SetLength(BrickLengths::Single);
-            brick->SetRectangle({static_cast<float>(x), static_cast<float>(y), game::grid::SIZE, game::grid::SIZE});
-            brick->SetPosition(Vector2{static_cast<float>(x), static_cast<float>(y)});
-            brick->PushSpritePositions(x);
-            bricks.push_back(std::move(brick));
-            return;
-        }
-
-        if (tile == '1') {
-            if (!bricks.empty() && bricks.back()->GetLength() == BrickLengths::Multiple) {
-                const auto &last_brick_position{bricks.back()->GetSpritePositions()};
-                if (const int lastBrickRightEdge{last_brick_position.back() + 32};
-                    lastBrickRightEdge == x) {
-                    bricks.back()->SetLength(BrickLengths::Multiple);
-                    bricks.back()->IncreaseRectangle();
-                    bricks.back()->PushSpritePositions(x);
-                    return;
-                }
-            }
-
-            auto brick = std::make_unique<Brick>();
-            brick->SetLength(BrickLengths::Multiple);
-            brick->SetRectangle({static_cast<float>(x), static_cast<float>(y), game::grid::SIZE, game::grid::SIZE});
-            brick->SetPosition(Vector2{static_cast<float>(x), static_cast<float>(y)});
-            brick->PushSpritePositions(x);
-            bricks.push_back(std::move(brick));
-        }
+        this->FactoryBrick(tile, x, y);
     });
+}
+
+
+auto BrickSet::FactoryBrick(const char &tile, const int x, const int y) -> void {
+    switch (tile) {
+        case '0':
+            this->CreateOrUpdateBrick(BrickTypes::Default, BrickLengths::Single, x, y);
+            break;
+        case '1':
+            this->CreateOrUpdateBrick(BrickTypes::Default, BrickLengths::Multiple, x, y);
+            break;
+        default:
+            this->CreateOrUpdateBrick(BrickTypes::Default, BrickLengths::Single, x, y);
+            break;
+    }
+}
+
+/*
+ * Create a new Brick or Update  it`s size dynamic if there BrickLengths is Multiple
+ */
+auto BrickSet::CreateOrUpdateBrick(const BrickTypes &type, const BrickLengths &len, const int x, const int y) -> void {
+    if (!bricks.empty() && len == BrickLengths::Multiple) {
+        if (const auto &last_brick = bricks.back();
+            !last_brick->GetSpritePositions().empty() &&
+            last_brick->GetSpritePositions().size() < 2
+            ) {
+            const auto last_position{last_brick->GetSpritePositions().back()};
+            if (const auto next_position = last_position + game::grid::SIZE; next_position == x) {
+                bricks.back()->IncriseSize(x);
+                return;
+            }
+        }
+    }
+
+    Vector2 pos {static_cast<float>(x), static_cast<float>(y)};
+    auto brick{std::make_unique<Brick>(type, len, pos)};
+    bricks.push_back(std::move(brick));
 }
 
 auto BrickSet::Draw() const -> void {
@@ -62,12 +69,12 @@ auto BrickSet::Draw() const -> void {
 
 auto BrickSet::SafalyDestroyBricks() -> void {
     std::erase_if(bricks,
-                  [](const std::unique_ptr<Brick>& brick) {
+                  [](const std::unique_ptr<Brick> &brick) {
                       return brick->IsDestroyed();
                   });
 }
 
-auto BrickSet::OnCollision(const Ball &ball) -> void {
+auto BrickSet::OnCollision(const Ball &ball) const -> void {
     for (const auto &brick: bricks) {
         if (ball.CheckCollisionWithBrick(*brick)) {
             brick->Destroy();

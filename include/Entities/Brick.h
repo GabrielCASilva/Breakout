@@ -28,44 +28,39 @@ enum class BrickLengths : uint8_t {
     Multiple,
 };
 
-class Brick final : public IEntity {
-    friend std::ostream &operator<<(std::ostream &os, const Brick &brick);
+enum class BrickTextures : uint8_t {
+  Default,
+};
 
+class Brick final : public IEntity {
     BrickTypes type;
     BrickLengths length;
-    std::uint8_t size;
     Vector2 position;
     Color color;
     bool is_destroyed;
+    std::uint8_t lives;
+    BrickTextures texture;
 
-    Rectangle rect_area;
+    Rectangle collision_area;
     std::vector<int> sprite_positions;
 
+    // TODO: método para definir o sprite do bloco
+    auto RandomizeTexture() -> void;
+    auto DefineTexture(const Rectangle&& src) const -> void;
 public:
-    Brick();
+    Brick() = delete;
+    Brick(const BrickTypes& type, const BrickLengths& length, const Vector2 &position);
 
     auto Update(float dt) -> void override;
     auto Draw() const -> void override;
 
-    auto Collider() -> void;
+    auto IncriseSize(int pos_x) -> void;
 
     auto Destroy() -> void;
     auto IsDestroyed() const -> bool;
 
-    auto SetPosition(const Vector2 &pos) -> void;
-    auto GetPosition() const -> Vector2;
-
-    auto AddSize() -> void;
-
-    auto PushSpritePositions(int x) -> void;
     auto GetSpritePositions() const -> std::vector<int>;
-
-    auto SetLength(BrickLengths l) -> void;
-    auto GetLength() const -> BrickLengths;
-
-    auto SetRectangle(const Rectangle &r) -> void;
-    auto GetRectangle() const -> Rectangle;
-    auto IncreaseRectangle() -> void;
+    auto GetCollisionArea() const -> Rectangle;
 };
 
 #endif //BRICK_H
