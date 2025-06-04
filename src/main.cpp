@@ -12,5 +12,7 @@ int main() {
         Game::Tick();
     }
 
+    Game::Unload();
+
     return 0;
 }

@@ -4,12 +4,17 @@
 
 #include "Screens/GameScreen.h"
 #include "Screens/ScreenManager.h"
+#include "Textures/TextureAtlas.h"
 #include "Utils/TextureLoader.h"
 
 auto Game::Initialize(const int width, const int height, const std::string &title) -> void {
     assert(!GetWindowHandle());
     InitWindow(width, height, title.c_str());
-    TextureLoader::Load("bricks");
+    // Loading images
+    TextureAtlas<TextureBricksSingle>::Load(BricksSingle);
+    TextureAtlas<TextureBricksDouble>::Load(BricksDouble);
+    TextureAtlas<TextureEntities>::Load(Entities);
+
     ScreenManager::ChangeScreen(std::make_unique<GameScreen>());
 }
 
@@ -32,4 +37,10 @@ auto Game::Draw() -> void {
     ClearBackground(BLACK);
     ScreenManager::Draw();
     EndDrawing();
+}
+
+auto Game::Unload() -> void {
+    TextureAtlas<TextureBricksSingle>::Unload();
+    TextureAtlas<TextureBricksDouble>::Unload();
+    TextureAtlas<TextureEntities>::Unload();
 }

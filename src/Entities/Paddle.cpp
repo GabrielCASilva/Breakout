@@ -1,5 +1,7 @@
 #include "Entities/Paddle.h"
 
+#include "Textures/TextureAtlas.h"
+
 constexpr auto _size{Vector2{96.0f, 16.0f}};
 
 Paddle::Paddle() : position{}, velocity{}, size{_size}, color{WHITE}, speed{}{}
@@ -9,9 +11,6 @@ Paddle::Paddle(const Vector2 position) : position {position},
 auto Paddle::Update(float dt) -> void {}
 
 auto Paddle::Draw() const -> void {
-    const auto pos_x {static_cast<int>(position.x)};
-    const auto pos_y {static_cast<int>(position.y)};
-    const auto width {static_cast<int>(size.x)};
-    const auto height {static_cast<int>(size.y)};
-    DrawRectangle(pos_x, pos_y, width, height, color);
+    const Rectangle& texture = TextureAtlas<TextureEntities>::GetTextureImage(TextureEntities::PADDLE);
+    TextureAtlas<TextureEntities>::DefineTexture(texture, position, color);
 }

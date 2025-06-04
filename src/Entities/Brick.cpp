@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 
+#include "Textures/TextureAtlas.h"
 #include "Utils/Grid.h"
 #include "Utils/TextureLoader.h"
 
@@ -12,9 +13,12 @@ Brick::Brick(const BrickTypes &type, const BrickLengths &length, const Vector2 &
     color{WHITE},
     is_destroyed{false},
     lives{1},
-    texture{BrickTextures::Default},
     collision_area{position.x, position.y, game::grid::SIZE, game::grid::SIZE} {
     sprite_positions.push_back(position.x);
+
+    constexpr int max {static_cast<int>(TextureBricksSingle::LEN) - 1};
+    const TextureBricksSingle &brick{TextureAtlas<TextureBricksSingle>::GetRandomTextureImage(max)};
+    texture = TextureAtlas<TextureBricksSingle>::GetTextureImage(brick);
 }
 
 auto Brick::Update(float dt) -> void {
@@ -22,16 +26,16 @@ auto Brick::Update(float dt) -> void {
 
 auto Brick::Draw() const -> void {
     switch (sprite_positions.size()) {
-        case 1:
-            this->DefineTexture({0, 0, game::grid::SIZE, game::grid::SIZE});
+        case 1: {
+            TextureAtlas<TextureBricksSingle>::DefineTexture(texture, position, color);
             break;
-        case 2:
-            this->DefineTexture(
-                {game::grid::SIZE, 0, game::grid::SIZE * 2, game::grid::SIZE}
-                );
+        }
+        case 2: {
+            TextureAtlas<TextureBricksDouble>::DefineTexture(texture, position, color);
             break;
+        }
         default:
-            this->DefineTexture({0, 0, game::grid::SIZE, game::grid::SIZE});
+            TextureAtlas<TextureBricksSingle>::DefineTexture(texture, position, color);
             break;
     }
 }
@@ -39,6 +43,7 @@ auto Brick::Draw() const -> void {
 auto Brick::IncriseSize(const int pos_x) -> void {
     collision_area.width += game::grid::SIZE;
     sprite_positions.push_back(pos_x);
+    texture = this->DefineRandomTexture();
 }
 
 auto Brick::Destroy() -> void {
@@ -57,10 +62,22 @@ auto Brick::GetCollisionArea() const -> Rectangle {
     return collision_area;
 }
 
-auto Brick::DefineTexture(const Rectangle &&src) const -> void {
-    DrawTextureRec(TextureLoader::texture, src, position, color);
-}
-
-auto Brick::RandomizeTexture() -> void {
-
+auto Brick::DefineRandomTexture() -> Rectangle {
+    switch (sprite_positions.size()) {
+        case 1: {
+            constexpr int max {static_cast<int>(TextureBricksSingle::LEN) - 1};
+            const TextureBricksSingle &brick{TextureAtlas<TextureBricksSingle>::GetRandomTextureImage(max)};
+            return TextureAtlas<TextureBricksSingle>::GetTextureImage(brick);
+        }
+        case 2: {
+            constexpr int max {static_cast<int>(TextureBricksSingle::LEN) - 1};
+            const TextureBricksDouble &brick{TextureAtlas<TextureBricksDouble>::GetRandomTextureImage(max)};
+            return TextureAtlas<TextureBricksDouble>::GetTextureImage(brick);
+        }
+        default: {
+            constexpr int max {static_cast<int>(TextureBricksSingle::LEN) - 1};
+            const TextureBricksSingle &brick{TextureAtlas<TextureBricksSingle>::GetRandomTextureImage(max)};
+            return TextureAtlas<TextureBricksSingle>::GetTextureImage(brick);
+        }
+    }
 }

@@ -20,16 +20,13 @@
 
 enum class BrickTypes : uint8_t {
     Default,
-    Storager
+    Storager,
+    Indestructible // Textura metálica
 };
 
 enum class BrickLengths : uint8_t {
     Single,
     Multiple,
-};
-
-enum class BrickTextures : uint8_t {
-  Default,
 };
 
 class Brick final : public IEntity {
@@ -39,14 +36,11 @@ class Brick final : public IEntity {
     Color color;
     bool is_destroyed;
     std::uint8_t lives;
-    BrickTextures texture;
+    Rectangle texture;
 
     Rectangle collision_area;
     std::vector<int> sprite_positions;
 
-    // TODO: método para definir o sprite do bloco
-    auto RandomizeTexture() -> void;
-    auto DefineTexture(const Rectangle&& src) const -> void;
 public:
     Brick() = delete;
     Brick(const BrickTypes& type, const BrickLengths& length, const Vector2 &position);
@@ -61,6 +55,9 @@ public:
 
     auto GetSpritePositions() const -> std::vector<int>;
     auto GetCollisionArea() const -> Rectangle;
+
+    auto GetTexture() const -> Rectangle;
+    auto DefineRandomTexture() -> Rectangle;
 };
 
 #endif //BRICK_H

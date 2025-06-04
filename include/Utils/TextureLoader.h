@@ -6,8 +6,7 @@
 
 class TextureLoader {
 public:
-    static Texture2D texture;
-    static auto Load(const std::string &file) -> void;
+    static auto Load(const std::string &file) -> Texture2D;
 };
 
 #endif //TEXTURE_H

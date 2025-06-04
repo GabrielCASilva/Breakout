@@ -1,5 +1,9 @@
 #include "Entities/Ball.h"
 
+#include <cmath>
+
+#include "Textures/TextureAtlas.h"
+
 Ball::Ball(): position{}, velocity{}, radius{8}, color{GOLD}, speed{} {}
 
 Ball::Ball(const Vector2 position): position{position}, velocity{}, radius{5}, color{GOLD}, speed{}  {}
@@ -10,9 +14,10 @@ auto Ball::Update(float dt) -> void {
 }
 
 auto Ball::Draw() const -> void {
-    const auto pos_x {static_cast<int>(position.x)};
-    const auto pos_y {static_cast<int>(position.y)};
-    DrawCircle(pos_x, pos_y, radius, color);
+    const Rectangle& texture = TextureAtlas<TextureEntities>::GetTextureImage(TextureEntities::BALL);
+    Rectangle dest = { position.x, position.y, std::fabsf(texture.width), std::fabsf(texture.height) };
+    Vector2 origin = { texture.width/2, texture.height/2 };
+    TextureAtlas<TextureEntities>::DefineTexturePro(texture, dest, origin, 0, color);
 }
 
 auto Ball::CheckCollisionWithBrick(const Brick &brick) const -> bool {
