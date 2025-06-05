@@ -19,24 +19,6 @@ public:
             }
         }
     }
-
-    template<std::invocable<int, int> Func>
-    static auto LoopInsideGrid(Func &&callback) -> void {
-        for (int row{0}; row < game::grid::ROWS; ++row) {
-            for (int col{0}; col < game::grid::COLS; ++col) {
-                callback(row, col);
-            }
-        }
-    }
-
-    template<std::invocable Func>
-    static auto LoopInsideGrid(Func &&callback) -> void {
-        for (int row{0}; row < game::grid::ROWS; ++row) {
-            for (int col{0}; col < game::grid::COLS; ++col) {
-                callback();
-            }
-        }
-    }
 };
 
 #endif //GRID_H

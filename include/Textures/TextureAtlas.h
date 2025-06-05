@@ -81,6 +81,8 @@ public:
     static auto DefineTexture(const Rectangle &src, const Vector2 &position, Color color) -> void;
 
     static auto DefineTexturePro(const Rectangle &src, const Rectangle &dest, const Vector2& origin, float rotation, Color color) -> void;
+
+    static auto DefineTextureEx(const Vector2 &position, float rotation, Color color) -> void;
 };
 
 #endif //TEXTURE_ATLAS_H

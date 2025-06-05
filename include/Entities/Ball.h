@@ -7,12 +7,13 @@
 #include "raylib.h"
 
 class Ball final : public IEntity {
-private:
     Vector2 position;
     Vector2 velocity;
     std::uint8_t radius;
     Color color;
     float speed;
+
+    Vector2 init_position;
 public:
     Ball();
     explicit Ball(Vector2 position);
@@ -24,7 +25,8 @@ public:
     auto Draw() const -> void override;
 
     // collision detection
-    auto CheckCollisionWithBrick(const Brick& brick) const -> bool;
+    [[nodiscard]] auto CheckCollisionWithBrick(const Brick& brick) const -> bool;
+    auto DefineInitialPos(const Vector2& pos) -> void;
 };
 
 #endif //BALL_H

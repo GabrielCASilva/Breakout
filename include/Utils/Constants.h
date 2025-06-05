@@ -11,7 +11,7 @@ namespace game
     constexpr std::string ROOT{"../"};
     constexpr std::uint16_t WINDOW_WIDTH{1024};
     constexpr std::uint16_t WINDOW_HEIGHT{768};
-    constexpr std::uint8_t FPS{60};
+    constexpr std::uint8_t FPS{144};
     constexpr std::uint8_t PIXELS_PER_METTER{100};
 
     namespace grid {

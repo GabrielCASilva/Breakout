@@ -1,4 +1,6 @@
 #include "Screens/GameScreen.h"
+
+#include <iostream>
 #include <raylib.h>
 
 #include "Bricks/BrickLoader.h"
@@ -23,6 +25,7 @@ auto GameScreen::Update(const float dt) -> void {
     paddle->Update(dt);
     ball->Update(dt);
     level->OnCollision(*ball);
+    ball->DefineInitialPos(paddle->GetPosition());
 
     level->SafalyDestroyBricks();
 }

@@ -24,7 +24,6 @@ auto BrickSet::InitializeBricks() -> void {
     });
 }
 
-
 auto BrickSet::FactoryBrick(const char &tile, const int x, const int y) -> void {
     switch (tile) {
         case '0':
