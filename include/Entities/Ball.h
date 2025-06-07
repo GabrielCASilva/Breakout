@@ -8,14 +8,21 @@
 
 class Ball final : public IEntity {
     Vector2 position;
-    Vector2 velocity;
     std::uint8_t radius;
     Color color;
     float speed;
+    Vector2 direction;
 
+    bool start_move;
+    bool move_first_time;
     Vector2 init_position;
+
+    auto MakeItMove() -> void;
+    auto Move(float dt) -> void;
+
+    auto StayOnBounds() -> void;
 public:
-    Ball();
+    Ball() = delete;
     explicit Ball(Vector2 position);
     Ball(const Ball& other) = delete;
     Ball(Ball&& other) = default;
@@ -24,9 +31,13 @@ public:
     auto Update(float dt) -> void override;
     auto Draw() const -> void override;
 
+    auto DefineInitialPos(const Vector2& pos) -> void;
+
     // collision detection
     [[nodiscard]] auto CheckCollisionWithBrick(const Brick& brick) const -> bool;
-    auto DefineInitialPos(const Vector2& pos) -> void;
+
+    auto OnCollision(const IEntity& entity) -> void override;
+    auto Bounce(bool in_x, bool in_y) -> void;
 };
 
 #endif //BALL_H

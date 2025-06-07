@@ -58,6 +58,8 @@ public:
 
     auto GetTexture() const -> Rectangle;
     auto DefineRandomTexture() -> Rectangle;
+
+    auto OnCollision(const IEntity& entity) -> void override;
 };
 
 #endif //BRICK_H

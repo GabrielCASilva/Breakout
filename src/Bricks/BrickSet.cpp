@@ -66,7 +66,7 @@ auto BrickSet::Draw() const -> void {
     }
 }
 
-auto BrickSet::SafalyDestroyBricks() -> void {
+auto BrickSet::SafelyDestroyBricks() -> void {
     std::erase_if(bricks,
                   [](const std::unique_ptr<Brick> &brick) {
                       return brick->IsDestroyed();

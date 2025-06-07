@@ -22,7 +22,7 @@ public:
     auto InitializeBricks() -> void;
     auto Draw() const -> void;
 
-    auto SafalyDestroyBricks() -> void;
+    auto SafelyDestroyBricks() -> void;
 
     // collision
     auto OnCollision(const Ball& ball) const -> void;

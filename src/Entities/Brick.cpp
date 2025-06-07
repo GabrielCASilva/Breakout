@@ -81,3 +81,7 @@ auto Brick::DefineRandomTexture() -> Rectangle {
         }
     }
 }
+
+auto Brick::OnCollision(const IEntity& entity) -> void {
+    // Do something
+}

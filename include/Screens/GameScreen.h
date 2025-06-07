@@ -10,7 +10,7 @@
 class GameScreen final : public IScreen {
     std::unique_ptr<Paddle> paddle;
     std::unique_ptr<Ball> ball;
-    std::unique_ptr<BrickSet> level;
+    std::unique_ptr<BrickSet> bricks;
 
 public:
     auto Init() -> void override;

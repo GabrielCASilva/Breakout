@@ -33,7 +33,6 @@ auto TextureAtlas<T>::GetTextureImage(const T& texture) -> Rectangle {
     return atlas[static_cast<int>(texture)];
 }
 
-// TODO: DESCONSIDERAR NO RANDOM A TEXTURA METÁLICA
 template <typename T>
 auto TextureAtlas<T>::GetRandomTextureImage(const int max) -> T {
     static_assert(std::is_enum_v<T>, "T must be an enum");
@@ -48,14 +47,10 @@ auto TextureAtlas<T>::GetRandomTextureImage(const int max) -> T {
 template <typename T>
 auto TextureAtlas<T>::DefineTexture(const Rectangle &src, const Vector2 &position, const Color color) -> void {
     DrawTextureRec(texture, src, position, color);
-    // DrawTextureEx();
-    //DrawTextureV();
 }
 
-// Use this instead: DrawTextureEx(_sprite->GetTexture(), _position, 0.0, 1.0, WHITE); OR DrawTextureV(texture, vector2, tint);
-
 template <typename T>
-auto TextureAtlas<T>::DefineTexturePro(const Rectangle &src, const Rectangle &dest, const Vector2& origin, float rotation, const Color color) -> void {
+auto TextureAtlas<T>::DefineTexturePro(const Rectangle &src, const Rectangle &dest, const Vector2& origin, const float rotation, const Color color) -> void {
     DrawTexturePro(texture, src, dest, origin, rotation, color);
 }
 

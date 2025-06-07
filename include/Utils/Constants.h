@@ -14,6 +14,16 @@ namespace game
     constexpr std::uint8_t FPS{144};
     constexpr std::uint8_t PIXELS_PER_METTER{100};
 
+    namespace paddle {
+        constexpr Vector2 SIZE{96.0f, 16.0f};
+        constexpr float SPEED{150.0f};
+    } // namespace paddle
+
+    namespace ball {
+        constexpr std::uint8_t RADIUS{8}; // TODO: change to 12px in sprite
+        constexpr float SPEED{150.0f};
+    } // namespace ball
+
     namespace grid {
         constexpr Color COLOR{255,255,255,50};
         constexpr std::uint8_t SIZE{32};
