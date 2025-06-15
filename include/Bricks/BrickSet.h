@@ -25,7 +25,7 @@ public:
     auto SafelyDestroyBricks() -> void;
 
     // collision
-    auto OnCollision(const Ball& ball) const -> void;
+    auto OnCollision(Ball& ball) const -> void;
 };
 
 #endif //LEVEL_H

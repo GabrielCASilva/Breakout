@@ -49,7 +49,7 @@ auto BrickSet::CreateOrUpdateBrick(const BrickTypes &type, const BrickLengths &l
             ) {
             const auto last_position{last_brick->GetSpritePositions().back()};
             if (const auto next_position = last_position + game::grid::SIZE; next_position == x) {
-                bricks.back()->IncriseSize(x);
+                bricks.back()->IncreaseSize(x);
                 return;
             }
         }
@@ -73,7 +73,7 @@ auto BrickSet::SafelyDestroyBricks() -> void {
                   });
 }
 
-auto BrickSet::OnCollision(const Ball &ball) const -> void {
+auto BrickSet::OnCollision(Ball &ball) const -> void {
     for (const auto &brick: bricks) {
         if (ball.CheckCollisionWithBrick(*brick)) {
             brick->Destroy();

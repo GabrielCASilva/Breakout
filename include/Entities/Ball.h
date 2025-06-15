@@ -8,35 +8,44 @@
 
 class Ball final : public IEntity {
     Vector2 position;
-    std::uint8_t radius;
-    Color color;
-    float speed;
-    Vector2 direction;
+    std::uint8_t radius{game::ball::RADIUS};
+    Color color{GOLD};
+    float speed{game::ball::SPEED};
+    Vector2 direction{0, 0};
 
-    bool start_move;
-    bool move_first_time;
-    Vector2 init_position;
+    bool start_move{false};
+    Vector2 init_position{position};
 
     auto MakeItMove() -> void;
+
     auto Move(float dt) -> void;
 
     auto StayOnBounds() -> void;
+
+    [[nodiscard]] auto ModifyAngle(float hit_pos, float normalized_hit) const -> float;
+
 public:
     Ball() = delete;
+
     explicit Ball(Vector2 position);
-    Ball(const Ball& other) = delete;
-    Ball(Ball&& other) = default;
-    Ball& operator=(const Ball& other) = delete;
+
+    Ball(const Ball &other) = delete;
+
+    Ball(Ball &&other) = default;
+
+    Ball &operator=(const Ball &other) = delete;
 
     auto Update(float dt) -> void override;
+
     auto Draw() const -> void override;
 
-    auto DefineInitialPos(const Vector2& pos) -> void;
+    auto DefineInitialPos(const Vector2 &pos) -> void;
 
     // collision detection
-    [[nodiscard]] auto CheckCollisionWithBrick(const Brick& brick) const -> bool;
+    [[nodiscard]] auto CheckCollisionWithBrick(const Brick &brick) -> bool;
 
-    auto OnCollision(const IEntity& entity) -> void override;
+    auto OnCollision(const IEntity &entity) -> void override;
+
     auto Bounce(bool in_x, bool in_y) -> void;
 };
 

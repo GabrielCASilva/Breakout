@@ -3,10 +3,11 @@
 #include <memory>
 
 #include "IScreen.h"
+#include "Screens.h"
 
 class ScreenManager {
 public:
-     static auto ChangeScreen(std::unique_ptr<IScreen> screen) -> void;
+     static auto ChangeScreen(Screens screen) -> void;
      static auto Init() -> void;
      static auto Update(float dt) -> void;
      static auto Draw() -> void;

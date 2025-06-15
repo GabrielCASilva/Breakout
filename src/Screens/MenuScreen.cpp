@@ -2,9 +2,11 @@
 #include <raylib.h>
 
 auto MenuScreen::Init() -> void {}
-auto MenuScreen::Update(float dt) -> void {}
+auto MenuScreen::Update(float dt) -> void {
+    m_ui->Update();
+}
 auto MenuScreen::Draw() -> void {
-    DrawText("Menu Screen", 100, 100, 20, RAYWHITE);
+    m_ui->Draw();
 }
 auto MenuScreen::Exit() -> void {
 

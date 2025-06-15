@@ -16,12 +16,12 @@ namespace game
 
     namespace paddle {
         constexpr Vector2 SIZE{96.0f, 16.0f};
-        constexpr float SPEED{150.0f};
+        constexpr float SPEED{200.0f};
     } // namespace paddle
 
     namespace ball {
-        constexpr std::uint8_t RADIUS{8}; // TODO: change to 12px in sprite
-        constexpr float SPEED{150.0f};
+        constexpr std::uint8_t RADIUS{8};
+        constexpr float SPEED{300.0f};
     } // namespace ball
 
     namespace grid {
@@ -35,6 +35,10 @@ namespace game
         constexpr int COLS = (WINDOW_WIDTH - (MARGIN_LEFT * MARGIN_RIGHT) * SIZE) / SIZE;
         constexpr int ROWS = (WINDOW_HEIGHT - (MARGIN_UP * MARGIN_DOWN) * SIZE) / SIZE;
     } // namespace grid
+
+    namespace ui {
+        constexpr Vector2 BTN_SIZE{32 * 4, 32};
+    }
 } // namespace game
 
 #endif // CONSTANTS_H

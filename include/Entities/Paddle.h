@@ -2,29 +2,43 @@
 #define PADDLE_H
 #include "IEntity.h"
 #include "raylib.h"
+#include "Utils/Constants.h"
 
 class Paddle final : public IEntity {
     Vector2 position;
-    Vector2 size;
-    Color color;
-    float speed;
+    Vector2 size{game::paddle::SIZE};
+    Color color{WHITE};
+    float speed{game::paddle::SPEED};
 
     auto Move(float dt) -> void;
+
     auto StayOnBounds() -> void;
+
 public:
-    Paddle();
+    Paddle() = delete;
+
     explicit Paddle(Vector2 position);
-    Paddle(const Paddle& other) = delete;
-    Paddle(Paddle&& other) = default;
-    Paddle& operator=(const Paddle& other) = delete;
+
+    Paddle(const Paddle &other) = delete;
+
+    Paddle(Paddle &&other) = default;
+
+    Paddle &operator=(const Paddle &other) = delete;
 
     auto Update(float dt) -> void override;
+
     auto Draw() const -> void override;
 
-    auto OnCollision(const IEntity& entity) -> void override;
+    auto OnCollision(const IEntity &entity) -> void override;
 
-    // get set
-    [[nodiscard]] auto GetPosition() const -> const Vector2&;
-    [[nodiscard]] auto GetSize() const -> const Vector2&;
+    // inlines
+    [[nodiscard]] auto GetPosition() const -> const Vector2 & {
+        return position;
+    }
+
+    [[nodiscard]] auto GetSize() const -> const Vector2 & {
+        return size;
+    }
+
 };
 #endif //PADDLE_H

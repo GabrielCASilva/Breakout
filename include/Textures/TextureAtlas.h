@@ -56,8 +56,8 @@ constexpr std::array<Rectangle, static_cast<int>(TextureBricksDouble::LEN)> Bric
 
 constexpr std::array<Rectangle, static_cast<int>(TextureEntities::LEN)> Entities = {
     {
-        {game::grid::SIZE * 3, game::grid::SIZE / 2, game::grid::SIZE * 3, game::grid::SIZE / 2}, // paddle
-        {game::grid::SIZE * 3 + 12, game::grid::SIZE + 12, 8, 8} // ball
+        {game::grid::SIZE * 3, game::grid::SIZE / 2.0f, game::grid::SIZE * 3, game::grid::SIZE / 2.0f}, // paddle
+        {game::grid::SIZE * 3 + 10, game::grid::SIZE + 10, 12, 12} // ball
     }
 };
 

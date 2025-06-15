@@ -6,6 +6,7 @@
 
 #include "IEntity.h"
 #include "raylib.h"
+#include "Utils/Constants.h"
 
 /*
  * Types of bricks:
@@ -33,33 +34,53 @@ class Brick final : public IEntity {
     BrickTypes type;
     BrickLengths length;
     Vector2 position;
-    Color color;
-    bool is_destroyed;
-    std::uint8_t lives;
-    Rectangle texture;
 
-    Rectangle collision_area;
+    Color color{WHITE};
+    bool is_destroyed{false};
+    std::uint8_t lives{1};
+    Rectangle texture{};
+    Rectangle collision_area{position.x, position.y, game::grid::SIZE, game::grid::SIZE};
     std::vector<int> sprite_positions;
 
 public:
     Brick() = delete;
-    Brick(const BrickTypes& type, const BrickLengths& length, const Vector2 &position);
+
+    Brick(const BrickTypes &type, const BrickLengths &length, const Vector2 &position);
 
     auto Update(float dt) -> void override;
+
     auto Draw() const -> void override;
 
-    auto IncriseSize(int pos_x) -> void;
+    auto IncreaseSize(int pos_x) -> void;
 
-    auto Destroy() -> void;
-    auto IsDestroyed() const -> bool;
+    [[nodiscard]] auto DefineRandomTexture() const -> Rectangle;
 
-    auto GetSpritePositions() const -> std::vector<int>;
-    auto GetCollisionArea() const -> Rectangle;
+    auto OnCollision(const IEntity &entity) -> void override;
 
-    auto GetTexture() const -> Rectangle;
-    auto DefineRandomTexture() -> Rectangle;
+    // inlines
+    [[nodiscard]] auto IsDestroyed() const -> bool {
+        return is_destroyed;
+    }
 
-    auto OnCollision(const IEntity& entity) -> void override;
+    auto Destroy() -> void {
+        is_destroyed = true;
+    }
+
+    [[nodiscard]] auto GetSpritePositions() const -> const std::vector<int> & {
+        return sprite_positions;
+    }
+
+    [[nodiscard]] auto GetCollisionArea() const -> const Rectangle & {
+        return collision_area;
+    }
+
+    [[nodiscard]] auto GetTexture() const -> const Rectangle & {
+        return texture;
+    }
+
+    [[nodiscard]] auto GetPosition() const -> const Vector2 & {
+        return position;
+    }
 };
 
 #endif //BRICK_H

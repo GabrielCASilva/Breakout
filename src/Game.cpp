@@ -2,7 +2,6 @@
 #include <cassert>
 #include <raylib.h>
 
-#include "Screens/GameScreen.h"
 #include "Screens/ScreenManager.h"
 #include "Textures/TextureAtlas.h"
 #include "Utils/TextureLoader.h"
@@ -15,7 +14,7 @@ auto Game::Initialize(const int width, const int height, const std::string &titl
     TextureAtlas<TextureBricksDouble>::Load(BricksDouble);
     TextureAtlas<TextureEntities>::Load(Entities);
 
-    ScreenManager::ChangeScreen(std::make_unique<GameScreen>());
+    ScreenManager::ChangeScreen(Screens::GAME);
 }
 
 auto Game::GameShouldClose() -> bool {
