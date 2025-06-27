@@ -6,7 +6,7 @@
 
 class TextureLoader {
 public:
-    static auto Load(const std::string &file) -> Texture2D;
+    static auto Load(const std::string &file, const std::string& type = "png") -> Texture2D;
 };
 
 #endif //TEXTURE_H

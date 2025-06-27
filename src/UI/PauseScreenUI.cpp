@@ -3,6 +3,7 @@
 #include <functional>
 
 #include "raylib.h"
+#include "GlobalStates/PlayerData.h"
 #include "Screens/ScreenManager.h"
 #include "UI/Button.h"
 #include "Utils/Constants.h"
@@ -46,7 +47,18 @@ auto PauseScreenUI::Update() -> void {
 }
 
 auto PauseScreenUI::Draw() const -> void {
+    ShowPlayerData();
+
     for (const auto &button: m_buttons) {
         button->Draw();
     }
+}
+
+auto PauseScreenUI::ShowPlayerData() const -> void {
+    const auto lives {"Lives " + std::to_string(PlayerData::GetLives())};
+    const auto points {"Points " + std::to_string(PlayerData::GetPoints())};
+    // const auto level {"Level " + std::to_string(m_level)};
+
+    DrawText(lives.c_str(), 200, 200, 20, WHITE);
+    DrawText(points.c_str(), 200, 250, 20, WHITE);
 }

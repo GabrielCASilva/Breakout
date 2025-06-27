@@ -39,6 +39,10 @@ namespace game
     namespace ui {
         constexpr Vector2 BTN_SIZE{32 * 4, 32};
     }
+
+    namespace level {
+        constexpr int MAX_LEVEL{2};
+    }
 } // namespace game
 
 #endif // CONSTANTS_H

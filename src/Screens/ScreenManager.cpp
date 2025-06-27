@@ -5,6 +5,7 @@
 #include "Screens/GameScreen.h"
 #include "Screens/MenuScreen.h"
 #include "Screens/Screens.h"
+#include "Screens/WinScreen.h"
 
 std::unique_ptr<IScreen> ScreenManager::current_screen = nullptr;
 
@@ -19,6 +20,9 @@ auto ScreenManager::ChangeScreen(const Screens screen) -> void {
             break;
         case Screens::MENU:
             current_screen = std::make_unique<MenuScreen>();
+            break;
+        case Screens::WIN:
+            current_screen = std::make_unique<WinScreen>();
             break;
         case Screens::CREDITS:
             current_screen = std::make_unique<CreditsScreen>();

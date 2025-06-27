@@ -5,6 +5,7 @@
 enum class Screens : std::uint8_t {
     MENU,
     GAME,
+    WIN,
     CREDITS,
     GAME_OVER
 };

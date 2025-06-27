@@ -6,6 +6,7 @@
 
 #include "Utils/Grid.h"
 #include "Entities/Brick.h"
+#include "GlobalStates/PlayerData.h"
 
 BrickSet::BrickSet(const std::vector<std::string> &layout) : layout{layout}, bricks{} {
 }
@@ -76,6 +77,7 @@ auto BrickSet::SafelyDestroyBricks() -> void {
 auto BrickSet::OnCollision(Ball &ball) const -> void {
     for (const auto &brick: bricks) {
         if (ball.CheckCollisionWithBrick(*brick)) {
+            PlayerData::GainPoints(10);
             brick->Destroy();
         }
     }

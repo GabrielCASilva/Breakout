@@ -5,19 +5,18 @@
 #include <iostream>
 
 #include "Entities/Paddle.h"
+#include "GlobalStates/PlayerData.h"
 #include "Textures/TextureAtlas.h"
 
-Ball::Ball(const Vector2 position): position{position} {
+Ball::Ball(const Vector2 position): m_position{position} {
 }
 
 auto Ball::Update(const float dt) -> void {
     if (!start_move) {
-        position = init_position;
+        m_position = init_position;
         this->MakeItMove();
     } else {
         this->Move(dt);
-        // do something...
-
         this->StayOnBounds();
     }
 }
@@ -26,13 +25,13 @@ auto Ball::Draw() const -> void {
     const Rectangle &texture = TextureAtlas<TextureEntities>::GetTextureImage(TextureEntities::BALL);
     const auto t_width{texture.width};
     const auto t_height{texture.height};
-    const Rectangle dest = {position.x, position.y, std::fabsf(t_width), std::fabsf(t_height)};
+    const Rectangle dest = {m_position.x, m_position.y, std::fabsf(t_width), std::fabsf(t_height)};
     const Vector2 origin = {t_width / 2, t_height / 2};
     TextureAtlas<TextureEntities>::DefineTexturePro(texture, dest, origin, 0, color);
 }
 
 auto Ball::CheckCollisionWithBrick(const Brick &brick) -> bool {
-    if (CheckCollisionCircleRec(position, radius, brick.GetCollisionArea())) {
+    if (CheckCollisionCircleRec(m_position, radius, brick.GetCollisionArea())) {
         const auto &[p_x, p_y, p_width, p_height] = brick.GetCollisionArea();
         // Calcula os limites do bloco
         const float brick_left = p_x;
@@ -41,10 +40,10 @@ auto Ball::CheckCollisionWithBrick(const Brick &brick) -> bool {
         const float brick_bottom = p_y + p_height;
 
         // Calcula a sobreposição em cada eixo
-        const float overlap_left = position.x + radius - brick_left;
-        const float overlap_right = brick_right - (position.x - radius);
-        const float overlap_top = position.y + radius - brick_top;
-        const float overlap_bottom = brick_bottom - (position.y - radius);
+        const float overlap_left = m_position.x + radius - brick_left;
+        const float overlap_right = brick_right - (m_position.x - radius);
+        const float overlap_top = m_position.y + radius - brick_top;
+        const float overlap_bottom = brick_bottom - (m_position.y - radius);
 
         // Verifica se há colisão (deveria ser verdadeiro já que estamos aqui)
         if (overlap_left > 0 && overlap_right > 0 && overlap_top > 0 && overlap_bottom > 0) {
@@ -71,12 +70,12 @@ auto Ball::OnCollision(const IEntity &entity) -> void {
     if (const auto paddle = dynamic_cast<const Paddle *>(&entity)) {
         const auto &[p_x, p_y] = paddle->GetPosition();
         const auto &[p_width, p_height] = paddle->GetSize();
-        if (CheckCollisionCircleRec(position, radius, {p_x, p_y, p_width, p_height})) {
+        if (CheckCollisionCircleRec(m_position, radius, {p_x, p_y, p_width, p_height})) {
             const float pw_center{p_x + p_width / 2.0f};
 
             // distancia entre a bola e o centro do paddle dividido pela metade do comprimento do paddle
             // resultando na posição normalizada entre o paddle e a bola [-1 - 0 - 1]
-            const float hit_pos{(position.x - pw_center) / (p_width / 2.0f)};
+            const float hit_pos{(m_position.x - pw_center) / (p_width / 2.0f)};
 
             const float normalized_hit = std::clamp(hit_pos, -1.0f, 1.0f);
 
@@ -109,7 +108,7 @@ auto Ball::MakeItMove() -> void {
     // Faz a bola se moder na direção que o mouse está
     const auto [x, y] = GetMousePosition();
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        const Vector2 new_position {x - position.x, y - position.y};
+        const Vector2 new_position {x - m_position.x, y - m_position.y};
         const auto magnitude {std::sqrt(new_position.x * new_position.x + new_position.y * new_position.y)};
         direction.x = new_position.x / magnitude;
         direction.y = new_position.y / magnitude;
@@ -118,29 +117,30 @@ auto Ball::MakeItMove() -> void {
 }
 
 auto Ball::Move(const float dt) -> void {
-    position.x += speed * dt * direction.x;
-    position.y += speed * dt * direction.y;
+    m_position.x += speed * dt * direction.x;
+    m_position.y += speed * dt * direction.y;
 }
 
 auto Ball::StayOnBounds() -> void {
-    if (position.x > game::WINDOW_WIDTH) {
-        position.x = static_cast<float>(game::WINDOW_WIDTH) - static_cast<float>(radius);
+    if (m_position.x > game::WINDOW_WIDTH) {
+        m_position.x = static_cast<float>(game::WINDOW_WIDTH) - static_cast<float>(radius);
         this->Bounce(true, false);
     }
 
-    if (position.x < 0) {
-        position.x = radius;
+    if (m_position.x < 0) {
+        m_position.x = radius;
         this->Bounce(true, false);
     }
-
-    // TODO: remove this collision part, the ball needs to pass throw the height of screen
-    if (position.y > game::WINDOW_HEIGHT) {
-        position.y = static_cast<float>(game::WINDOW_HEIGHT) - static_cast<float>(radius);
-        this->Bounce(false, true);
+    
+    if (m_position.y > game::WINDOW_HEIGHT) {
+        PlayerData::DecrementLives();
+        Reset();
+        // m_position.y = static_cast<float>(game::WINDOW_HEIGHT) - static_cast<float>(radius);
+        // this->Bounce(false, true);
     }
 
-    if (position.y < 0) {
-        position.y = radius;
+    if (m_position.y < 0) {
+        m_position.y = radius;
         this->Bounce(false, true);
     }
 }
