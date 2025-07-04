@@ -7,21 +7,23 @@
 #include "Utils/Constants.h"
 
 enum class TextureBricksSingle: std::uint8_t {
-    ORANGE_BRICK,
-    PINK_BRICK,
-    PURPLE_BRICK,
-    GREEN_BRICK,
     RED_BRICK,
+    ORANGE_BRICK,
+    PURPLE_BRICK,
+    YELLOW_BRICK,
+    GREEN_BRICK,
+    BLUE_BRICK,
     METAL_BRICK,
     LEN
 };
 
 enum class TextureBricksDouble: std::uint8_t {
-    ORANGE_BRICK,
-    PINK_BRICK,
-    PURPLE_BRICK,
-    GREEN_BRICK,
     RED_BRICK,
+    ORANGE_BRICK,
+    PURPLE_BRICK,
+    YELLOW_BRICK,
+    GREEN_BRICK,
+    BLUE_BRICK,
     METAL_BRICK,
     LEN
 };
@@ -34,30 +36,32 @@ enum class TextureEntities: std::uint8_t {
 
 constexpr std::array<Rectangle, static_cast<int>(TextureBricksSingle::LEN)> BricksSingle = {
     {
-        {0, 0, game::grid::SIZE, game::grid::SIZE}, // Orange
-        {0, game::grid::SIZE, game::grid::SIZE, game::grid::SIZE}, // Pink
-        {0, game::grid::SIZE * 2, game::grid::SIZE, game::grid::SIZE}, // Purple
-        {0, game::grid::SIZE * 3, game::grid::SIZE, game::grid::SIZE}, // green
-        {0, game::grid::SIZE * 4, game::grid::SIZE, game::grid::SIZE}, // red
-        {0, game::grid::SIZE * 5, game::grid::SIZE, game::grid::SIZE}, // metal
+        {8 * 2, 0, 8, 8}, // red
+        {8 * 2, 8, 8, 8}, // orange
+        {8 * 2, 8 * 2, 8, 8}, // purple
+        {8 * 5, 0, 8, 8}, // yellow
+        {8 * 5, 8, 8, 8}, // green
+        {8 * 5, 8 * 2, 8, 8}, // blue
+        {8 * 5, 8 * 2, 8, 8}, // metal
     }
 };
 
 constexpr std::array<Rectangle, static_cast<int>(TextureBricksDouble::LEN)> BricksDouble = {
     {
-        {game::grid::SIZE, 0, game::grid::SIZE * 2, game::grid::SIZE}, // orange
-        {game::grid::SIZE, game::grid::SIZE, game::grid::SIZE * 2, game::grid::SIZE}, // pink
-        {game::grid::SIZE, game::grid::SIZE * 2, game::grid::SIZE * 2, game::grid::SIZE}, // purple
-        {game::grid::SIZE, game::grid::SIZE * 3, game::grid::SIZE * 2, game::grid::SIZE}, // green
-        {game::grid::SIZE, game::grid::SIZE * 4, game::grid::SIZE * 2, game::grid::SIZE}, // red
-        {game::grid::SIZE, game::grid::SIZE * 5, game::grid::SIZE * 2, game::grid::SIZE}, // metal
+        {0, 0, 8 * 2, 8}, // red
+        {0, 8, 8 * 2, 8}, // orange
+        {0, 8 * 2, 8 * 2, 8}, // purple
+        {8 * 3, 0, 8 * 2, 8}, // yellow
+        {8 * 3, 8, 8 * 2, 8}, // green
+        {8 * 3, 8 * 2, 8 * 2, 8}, // blue
+        {8 * 3, 8 * 2, 8 * 2, 8}, // metal
     }
 };
 
 constexpr std::array<Rectangle, static_cast<int>(TextureEntities::LEN)> Entities = {
     {
-        {game::grid::SIZE * 3, game::grid::SIZE / 2.0f, game::grid::SIZE * 3, game::grid::SIZE / 2.0f}, // paddle
-        {game::grid::SIZE * 3 + 10, game::grid::SIZE + 10, 12, 12} // ball
+        {8, 8 * 4, 8 * 5, 4}, // paddle
+        {8 * 8, 8 * 4, 8, 8} // ball
     }
 };
 
@@ -83,6 +87,12 @@ public:
     static auto DefineTexturePro(const Rectangle &src, const Rectangle &dest, const Vector2& origin, float rotation, Color color) -> void;
 
     static auto DefineTextureEx(const Vector2 &position, float rotation, Color color) -> void;
+
+    static auto DefineTexture2(const Rectangle &src, const Vector2 &position, const Vector2 origin = {0,0}) -> void {
+        const Rectangle dest = { position.x, position.y, (float)src.width*game::SCALE, (float)src.height*game::SCALE };
+        const Vector2 originScaled = {origin.x * game::SCALE, origin.y * game::SCALE};
+        DrawTexturePro(texture, src, dest, originScaled, 0.0, WHITE);
+    }
 };
 
 #endif //TEXTURE_ATLAS_H

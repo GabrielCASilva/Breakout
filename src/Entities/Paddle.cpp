@@ -11,7 +11,13 @@ auto Paddle::Update(const float dt) -> void {
 
 auto Paddle::Draw() const -> void {
     const Rectangle &texture = TextureAtlas<TextureEntities>::GetTextureImage(TextureEntities::PADDLE);
-    TextureAtlas<TextureEntities>::DefineTexture(texture, position, color);
+    TextureAtlas<TextureEntities>::DefineTexture2(texture, position);
+    // Rectangle source = { 0.0f, 0.0f, (float)texture.width, (float)texture.height };
+    // Rectangle dest = { position.x, position.y, (float)texture.width*game::SCALE, (float)texture.height*game::SCALE };
+    // Vector2 origin = { 0.0f, 0.0f };
+    // DrawTexturePro(TextureAtlas<TextureEntities>::GetTexture(), source, dest, origin, 0.0, WHITE);
+
+    // TextureAtlas<TextureEntities>::DefineTexturePro(source, dest, origin, 0.0, WHITE);
 }
 
 auto Paddle::Move(const float dt) -> void {

@@ -10,7 +10,10 @@ auto Background::LoadAnimatedTexture(std::string &&file) -> void {
 }
 
 auto Background::Draw() const -> void {
-    DrawTexture(m_texture, m_position.x, m_position.y, WHITE);
+    Rectangle source = { 0.0f, 0.0f, (float)m_texture.width, (float)m_texture.height };
+    Rectangle dest = { m_position.x, m_position.y, (float)m_texture.width*game::SCALE, (float)m_texture.height*game::SCALE };
+    Vector2 origin = { 0.0f, 0.0f };
+    DrawTexturePro(m_texture, source, dest, origin, 0.0, WHITE);
 }
 
 auto Background::UpdateAnimation() -> void {

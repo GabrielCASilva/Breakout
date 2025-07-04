@@ -9,7 +9,7 @@ template <typename T>
 auto TextureAtlas<T>::Load(const std::array<Rectangle, static_cast<std::size_t>(T::LEN)>& _atlas) -> void {
     if (loaded) return;
 
-    texture = TextureLoader::Load("bricks");
+    texture = TextureLoader::Load("bricks2");
     SetTextureFilter(texture, TEXTURE_FILTER_POINT);
     atlas = _atlas;
 

@@ -9,25 +9,27 @@
 namespace game
 {
     constexpr std::string ROOT{"../"};
-    constexpr std::uint16_t WINDOW_WIDTH{1024};
-    constexpr std::uint16_t WINDOW_HEIGHT{768};
+    constexpr std::uint8_t SCALE{4};
+    constexpr std::uint16_t WINDOW_WIDTH{320*SCALE};
+    constexpr std::uint16_t WINDOW_HEIGHT{240*SCALE};
     constexpr std::uint8_t FPS{144};
     constexpr std::uint8_t PIXELS_PER_METTER{100};
 
     namespace paddle {
-        constexpr Vector2 SIZE{96.0f, 16.0f};
-        constexpr float SPEED{200.0f};
+        constexpr Vector2 SIZE{8 * 5 * SCALE, 8 * SCALE};
+        constexpr float SPEED{120.0f*SCALE};
     } // namespace paddle
 
     namespace ball {
-        constexpr std::uint8_t RADIUS{8};
-        constexpr float SPEED{300.0f};
+        constexpr std::uint8_t RADIUS{2*SCALE};
+        constexpr float SPEED{120.0f*SCALE};
     } // namespace ball
 
     namespace grid {
         constexpr Color COLOR{255,255,255,50};
-        constexpr std::uint8_t SIZE{32};
-        constexpr std::uint8_t MARGIN_UP{2};
+        constexpr std::uint8_t SIZE{8*SCALE};
+        constexpr std::uint8_t O_SIZE{8};
+        constexpr std::uint8_t MARGIN_UP{3};
         constexpr std::uint8_t MARGIN_DOWN{6};
         constexpr std::uint8_t MARGIN_LEFT{2};
         constexpr std::uint8_t MARGIN_RIGHT{2};

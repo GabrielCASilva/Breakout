@@ -14,8 +14,9 @@ auto Text::Load(std::string &&file) -> void {
     // m_font.texture = LoadTextureFromImage(atlas);
     // UnloadImage(atlas);
 
-    m_font = LoadFontEx(src.c_str(), 54, nullptr, 0);
+    m_font = LoadFontEx(src.c_str(), 64, nullptr, 903);
     SetTextureFilter(m_font.texture, TEXTURE_FILTER_POINT);
+    SetTextLineSpacing(1);
 }
 
 auto Text::Unload() -> void {

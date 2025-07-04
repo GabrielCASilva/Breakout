@@ -8,7 +8,8 @@
 
 class Button {
 public:
-    Button(Vector2 position, const std::string &text);
+    Button(const Vector2 position, std::string &&text): m_position(position), m_text(text) {
+    }
 
     auto Draw() const -> void;
 
@@ -26,15 +27,16 @@ public:
         if (m_callback) m_callback(m_isHovered, m_isPressed);
     }
 
-    auto IsHovered() const -> bool { return m_isHovered; }
-    auto IsPressed() const -> bool { return m_isPressed; }
+    [[nodiscard]] auto IsHovered() const -> bool { return m_isHovered; }
+
+    [[nodiscard]] auto IsPressed() const -> bool { return m_isPressed; }
 
 private:
-    Vector2 m_position;
+    Vector2 m_position{};
     Vector2 m_size{game::ui::BTN_SIZE};
-    std::string m_text;
-    bool m_isHovered = false;
-    bool m_isPressed = false;
+    std::string m_text{};
+    bool m_isHovered{false};
+    bool m_isPressed{false};
 
     std::function<void(bool, bool)> m_callback{nullptr};
 };

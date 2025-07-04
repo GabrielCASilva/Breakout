@@ -32,19 +32,19 @@ public:
     auto Bounce(bool in_x, bool in_y) -> void;
 
     auto Reset() -> void {
-        start_move = false;
-        m_position = init_position;
+        m_start_move = false;
+        m_position = m_init_position;
     }
 
 private:
     Vector2 m_position;
-    std::uint8_t radius{game::ball::RADIUS};
-    Color color{GOLD};
-    float speed{game::ball::SPEED};
-    Vector2 direction{0, 0};
+    std::uint8_t m_radius{game::ball::RADIUS};
+    Color m_color{GOLD};
+    float m_speed{game::ball::SPEED};
+    Vector2 m_direction{0, 0};
 
-    bool start_move{false};
-    Vector2 init_position{m_position};
+    bool m_start_move{false};
+    Vector2 m_init_position{m_position};
 
     auto MakeItMove() -> void;
 
