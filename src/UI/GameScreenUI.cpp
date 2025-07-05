@@ -20,7 +20,7 @@ auto GameScreenUI::Draw() const -> void {
 
     const auto level {"Level " + std::to_string(m_level)};
     Vector2 teste2 = MeasureTextEx(Text::m_font, level.c_str(), font_size, 1);
-    DrawTextEx(Text::m_font, level.c_str(), {game::WINDOW_WIDTH/2 - teste2.x/2, pos_y}, font_size, 1, WHITE);
+    DrawTextEx(Text::m_font, level.c_str(), {game::WINDOW_WIDTH/2.0f - teste2.x/2, pos_y}, font_size, 1, WHITE);
 
     const auto lives {"Lives " + std::to_string(PlayerData::GetLives())};
     Vector2 teste = MeasureTextEx(Text::m_font, lives.c_str(), font_size, 1);

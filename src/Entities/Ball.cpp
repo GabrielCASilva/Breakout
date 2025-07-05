@@ -23,41 +23,51 @@ auto Ball::Update(const float dt) -> void {
 
 auto Ball::Draw() const -> void {
     const Rectangle &texture = TextureAtlas<TextureEntities>::GetTextureImage(TextureEntities::BALL);
-    TextureAtlas<TextureEntities>::DefineTexture2(texture, m_position, {texture.width/2, texture.height/2});
+    TextureAtlas<TextureEntities>::DefineTexture2(texture, m_position, {texture.width / 2, texture.height / 2});
 }
 
 auto Ball::CheckCollisionWithBrick(const Brick &brick) -> bool {
     if (CheckCollisionCircleRec(m_position, m_radius, brick.GetCollisionArea())) {
         const auto &[p_x, p_y, p_width, p_height] = brick.GetCollisionArea();
-        // Calcula os limites do bloco
-        const float brick_left = p_x;
-        const float brick_right = p_x + p_width;
-        const float brick_top = p_y;
-        const float brick_bottom = p_y + p_height;
+        // bordas do quadrado
+        const float left_edge = p_x;
+        const float right_edge = p_x + p_width;
+        const float top_edge = p_y;
+        const float bottom_edge = p_y + p_height;
 
-        // Calcula a sobreposição em cada eixo
-        const float overlap_left = m_position.x + m_radius - brick_left;
-        const float overlap_right = brick_right - (m_position.x - m_radius);
-        const float overlap_top = m_position.y + m_radius - brick_top;
-        const float overlap_bottom = brick_bottom - (m_position.y - m_radius);
+        // "bordas" do circulo
+        const float my_top = m_position.y - static_cast<float>(m_radius);
+        const float my_bottom = m_position.y + static_cast<float>(m_radius);
+        const float my_left = m_position.x - static_cast<float>(m_radius);
+        const float my_right = m_position.x + static_cast<float>(m_radius);
 
-        // Verifica se há colisão (deveria ser verdadeiro já que estamos aqui)
-        if (overlap_left > 0 && overlap_right > 0 && overlap_top > 0 && overlap_bottom > 0) {
-            // Encontra a menor sobreposição
-            const float min_overlap_x = std::min(overlap_left, overlap_right);
-            const float min_overlap_y = std::min(overlap_top, overlap_bottom);
+        // calculando o momento de sobreposição das bordas
+        const float overlap_left = std::fabs(my_right - left_edge);
+        const float overlap_right = std::fabs(my_left - right_edge);
+        const float overlap_top = std::fabs(my_bottom - top_edge);
+        const float overlap_bottom = std::fabs(my_top - bottom_edge);
 
-            const float bias = 1.0f; // ajuste conforme necessário
-            if (std::abs(min_overlap_x - min_overlap_y) < bias) {
-                // Quando muito próximo de um canto, rebate nos dois eixos
-                this->Bounce(true, true);
-            } else if (min_overlap_x < min_overlap_y) {
-                this->Bounce(true, false);
-            } else {
-                this->Bounce(false, true);
-            }
-            return true;
+        // calculando qual a menor distancia entre cada borda
+        const float min_overlap_x = std::min(overlap_left, overlap_right);
+        const float min_overlap_y = std::min(overlap_top, overlap_bottom);
+
+        if (std::abs(min_overlap_x - min_overlap_y) < 1.0f * game::SCALE) {
+            Bounce(true,true);
+        } else if (min_overlap_x < min_overlap_y) {
+            // correção da posição da bola
+            m_position.x = overlap_left < overlap_right
+                               ? m_position.x - overlap_left - 1
+                               : m_position.x + overlap_right + 1;
+            Bounce(true, false);
+        } else {
+            // correção da posição da bola
+            m_position.y = overlap_top < overlap_bottom
+                               ? m_position.y - overlap_top - 1
+                               : m_position.y + overlap_bottom + 1;
+            Bounce(false, true);
         }
+
+        return true;
     }
     return false;
 }
@@ -96,16 +106,12 @@ auto Ball::Bounce(const bool in_x, const bool in_y) -> void {
     if (in_y) m_direction.y *= -1;
 }
 
-auto Ball::DefineInitialPos(const Vector2 &pos) -> void {
-    m_init_position.x = pos.x + game::paddle::SIZE.x / 2;
-}
-
 auto Ball::MakeItMove() -> void {
     // Faz a bola se moder na direção que o mouse está
     const auto [x, y] = GetMousePosition();
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        const Vector2 new_position {x - m_position.x, y - m_position.y};
-        const auto magnitude {std::sqrt(new_position.x * new_position.x + new_position.y * new_position.y)};
+        const Vector2 new_position{x - m_position.x, y - m_position.y};
+        const auto magnitude{std::sqrt(new_position.x * new_position.x + new_position.y * new_position.y)};
         m_direction.x = new_position.x / magnitude;
         m_direction.y = new_position.y / magnitude;
         m_start_move = true;
@@ -127,7 +133,7 @@ auto Ball::StayOnBounds() -> void {
         m_position.x = static_cast<float>(game::SCALE + m_radius);
         this->Bounce(true, false);
     }
-    
+
     if (m_position.y > game::WINDOW_HEIGHT) {
         PlayerData::DecrementLives();
         Reset();

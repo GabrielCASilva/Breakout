@@ -22,7 +22,9 @@ public:
 
     auto Draw() const -> void override;
 
-    auto DefineInitialPos(const Vector2 &pos) -> void;
+    auto DefineInitialPos(const Vector2 &pos) -> void {
+        m_init_position.x = pos.x + game::paddle::SIZE.x / 2;
+    }
 
     // collision detection
     [[nodiscard]] auto CheckCollisionWithBrick(const Brick &brick) -> bool;
