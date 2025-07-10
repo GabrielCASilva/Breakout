@@ -31,6 +31,9 @@ enum class TextureBricksDouble: std::uint8_t {
 enum class TextureEntities: std::uint8_t {
     PADDLE,
     BALL,
+    TITLE,
+    CURSOR,
+    BTN_SELECTED_INDICATOR,
     LEN
 };
 
@@ -60,8 +63,11 @@ constexpr std::array<Rectangle, static_cast<int>(TextureBricksDouble::LEN)> Bric
 
 constexpr std::array<Rectangle, static_cast<int>(TextureEntities::LEN)> Entities = {
     {
-        {8, 8 * 4, 8 * 5, 4}, // paddle
-        {8 * 8, 8 * 4, 8, 8} // ball
+        {0, 8 * 4, 8 * 5, 4}, // paddle
+        {8 * 7, 8 * 4, 8, 8}, // ball
+        {0, 8 * 5, 8 * 23, 8 * 4}, // title
+        {8 * 10, 8 * 3, 8, 8}, // cursor
+        {8 * 8, 8 * 4, 8, 8}, // button selected indicator
     }
 };
 
@@ -82,13 +88,8 @@ public:
 
     static auto GetRandomTextureImage(int max) -> T;
 
-    static auto DefineTexture(const Rectangle &src, const Vector2 &position, Color color) -> void;
-
-    static auto DefineTexturePro(const Rectangle &src, const Rectangle &dest, const Vector2& origin, float rotation, Color color) -> void;
-
-    static auto DefineTextureEx(const Vector2 &position, float rotation, Color color) -> void;
-
-    static auto DefineTexture2(const Rectangle &src, const Vector2 &position, const Vector2 origin = {0,0}) -> void {
+    // TODO: Some parts of this code are C like, change (float) to static_cast in de future
+    static auto DefineTexture(const Rectangle &src, const Vector2 &position, const Vector2 origin = {0,0}) -> void {
         const Rectangle dest = { position.x, position.y, (float)src.width*game::SCALE, (float)src.height*game::SCALE };
         const Vector2 originScaled = {origin.x * game::SCALE, origin.y * game::SCALE};
         DrawTexturePro(texture, src, dest, originScaled, 0.0, WHITE);

@@ -3,18 +3,18 @@
 #include <functional>
 
 #include "raylib.h"
-#include "GlobalStates/PlayerData.h"
+#include "States/PlayerData.h"
 #include "Screens/ScreenManager.h"
 #include "UI/Button.h"
 #include "Utils/Constants.h"
 
 PauseScreenUI::PauseScreenUI() {
-    constexpr float width{game::WINDOW_WIDTH / 2 - game::ui::BTN_SIZE.x / 2};
+    constexpr float width{game::WINDOW_WIDTH / 2.0f};
     constexpr float height{game::WINDOW_HEIGHT / 2.0f + 100};
-    m_buttons[0] = std::make_unique<Button>(Vector2{width, height - 50}, "CONTINUE");
-    m_buttons[1] = std::make_unique<Button>(Vector2{width, height}, "RESTART");
-    m_buttons[2] = std::make_unique<Button>(Vector2{width, height + 50}, "RETURN TO TITLE SCREEN");
-    m_buttons[3] = std::make_unique<Button>(Vector2{width, height + 100}, "QUIT");
+    m_buttons[0] = std::make_unique<Button>(Vector2{width, height - 50}, "CONTINUE", FontTypes::SIZE_20, ButtonOrigins::CENTER);
+    m_buttons[1] = std::make_unique<Button>(Vector2{width, height}, "RESTART", FontTypes::SIZE_20, ButtonOrigins::CENTER);
+    m_buttons[2] = std::make_unique<Button>(Vector2{width, height + 50}, "TITLE SCREEN", FontTypes::SIZE_20, ButtonOrigins::CENTER);
+    m_buttons[3] = std::make_unique<Button>(Vector2{width, height + 100}, "QUIT", FontTypes::SIZE_20, ButtonOrigins::CENTER);
 
     m_buttons[0]->SetOnClick([this](const bool hovered, const bool pressed) {
         if (hovered && pressed) SetContinue(false);

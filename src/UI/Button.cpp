@@ -4,23 +4,44 @@
 #include <iostream>
 
 #include "raylib.h"
+#include "Textures/TextureAtlas.h"
 #include "UI/Text.h"
 
 auto Button::Draw() const -> void {
     // ReSharper disable once CppDFAConstantConditions
     if (m_isHovered) {
         // ReSharper disable once CppDFAUnreachableCode
-        DrawRectangle(m_position.x, m_position.y, m_size.x, m_size.y, RED);
-    } else {
-        DrawRectangle(m_position.x, m_position.y, m_size.x, m_size.y, GREEN);
+        const Rectangle texture = TextureAtlas<TextureEntities>::GetTextureImage(
+            TextureEntities::BTN_SELECTED_INDICATOR);
+        const auto position = Vector2(
+            m_position.x - (texture.width * game::SCALE) - 2 * game::SCALE,
+            m_position.y + game::SCALE
+        );
+        TextureAtlas<TextureEntities>::DefineTexture(texture, position);
+
+        const auto position2 = Vector2(
+            m_position.x + m_size.x + 2 * game::SCALE,
+            m_position.y + game::SCALE
+        );
+        TextureAtlas<TextureEntities>::DefineTexture(texture, position2);
     }
 
-    float a = m_size.x/2;
-    float b = m_size.y/2;
-    Vector2 teste = MeasureTextEx(Text::m_font, m_text.c_str(), 64, 1);
-    Vector2 teste2 = {m_position.x - teste.x/2 + a + 2, m_position.y - teste.y/2 + b - 2};
-    // Vector2 teste2 = {m_position.x , m_position.y};
+    Text::Draw(FontTypes::SIZE_20, m_text, m_textPosition, WHITE);
+}
 
-
-    DrawTextEx(Text::m_font, m_text.c_str(), teste2, 64, 1, WHITE);
+auto Button::DefineButtonAlign(const ButtonOrigins &origin) -> void {
+    std::cout << static_cast<int>(origin) << std::endl;
+    switch (origin) {
+        case ButtonOrigins::CENTER:
+            m_position.x -= m_size.x / 2.0f;
+            m_textPosition = {
+                .x = m_position.x,
+                .y = m_position.y - m_size.y / 2.0f,
+            };
+            break;
+        case ButtonOrigins::START:
+        default:
+            m_textPosition = m_position;
+            break;
+    }
 }

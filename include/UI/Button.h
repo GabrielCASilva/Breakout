@@ -4,11 +4,23 @@
 #include <string>
 
 #include "raylib.h"
+#include "Text.h"
 #include "Utils/Constants.h"
+
+enum class ButtonOrigins {
+    START,
+    CENTER,
+};
 
 class Button {
 public:
-    Button(const Vector2 position, std::string &&text): m_position(position), m_text(text) {
+    Button(const Vector2 position, std::string &&text,
+           FontTypes &&type = FontTypes::SIZE_20, ButtonOrigins &&origin = ButtonOrigins::START)
+        : m_position(position), m_text(text) {
+        m_size = Text::Measure(type, m_text);
+        m_size.x = m_size.x - game::SCALE;
+        m_size.y /= 2;
+        DefineButtonAlign(origin);
     }
 
     auto Draw() const -> void;
@@ -33,12 +45,17 @@ public:
 
 private:
     Vector2 m_position{};
-    Vector2 m_size{game::ui::BTN_SIZE};
+    Vector2 m_size{};
+
     std::string m_text{};
+    Vector2 m_textPosition{}; // text position relate to button
+
     bool m_isHovered{false};
     bool m_isPressed{false};
 
     std::function<void(bool, bool)> m_callback{nullptr};
+
+    auto DefineButtonAlign(const ButtonOrigins &origin) -> void;
 };
 
 #endif //BUTTON_H

@@ -4,6 +4,7 @@
 
 #include "IScreen.h"
 #include "UI/MenuScreenUI.h"
+#include "Utils/Background.h"
 
 class MenuScreen final : public IScreen {
 public:
@@ -17,6 +18,8 @@ public:
 
 private:
     std::unique_ptr<MenuScreenUI> m_ui{std::make_unique<MenuScreenUI>()};
+    Background m_bg{};
+    Background m_bg_planets{};
 };
 
 #endif //MENU_SCREEN_H

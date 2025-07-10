@@ -6,7 +6,7 @@
 
 #include "Utils/Grid.h"
 #include "Entities/Brick.h"
-#include "GlobalStates/PlayerData.h"
+#include "States/PlayerData.h"
 
 BrickSet::BrickSet(const std::vector<std::string> &layout) : layout{layout}, bricks{} {
 }

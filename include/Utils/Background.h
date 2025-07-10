@@ -22,7 +22,9 @@ public:
 
     Background &operator=(Background &&) = delete;
 
-    auto LoadAnimatedTexture(std::string&& file) -> void;
+    auto LoadAnimatedTexture(std::string &&file) -> void;
+
+    auto LoadTexture(std::string &&file) -> void;
 
     auto UpdateAnimation() -> void;
 

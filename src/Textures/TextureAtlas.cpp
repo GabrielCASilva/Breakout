@@ -9,7 +9,7 @@ template <typename T>
 auto TextureAtlas<T>::Load(const std::array<Rectangle, static_cast<std::size_t>(T::LEN)>& _atlas) -> void {
     if (loaded) return;
 
-    texture = TextureLoader::Load("bricks2");
+    texture = TextureLoader::Load("atlas");
     SetTextureFilter(texture, TEXTURE_FILTER_POINT);
     atlas = _atlas;
 
@@ -42,21 +42,6 @@ auto TextureAtlas<T>::GetRandomTextureImage(const int max) -> T {
     std::uniform_int_distribution dist(0, max - 1);
 
     return static_cast<T>(dist(gen));
-}
-
-template <typename T>
-auto TextureAtlas<T>::DefineTexture(const Rectangle &src, const Vector2 &position, const Color color) -> void {
-    DrawTextureRec(texture, src, position, color);
-}
-
-template <typename T>
-auto TextureAtlas<T>::DefineTexturePro(const Rectangle &src, const Rectangle &dest, const Vector2& origin, const float rotation, const Color color) -> void {
-    DrawTexturePro(texture, src, dest, origin, rotation, color);
-}
-
-template <typename T>
-auto TextureAtlas<T>::DefineTextureEx(const Vector2 &position, const float rotation, const Color color) -> void {
-    DrawTextureEx(texture, position, rotation, 1, color);
 }
 
 template class TextureAtlas<TextureBricksSingle>;

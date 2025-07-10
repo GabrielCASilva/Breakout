@@ -3,7 +3,7 @@
 #include <raylib.h>
 
 #include "Bricks/BrickLoader.h"
-#include "GlobalStates/PlayerData.h"
+#include "States/PlayerData.h"
 #include "Screens/ScreenManager.h"
 #include "Utils/Constants.h"
 #include "Utils/Grid.h"
@@ -16,7 +16,7 @@ auto GameScreen::Init() -> void {
     m_pause_screen = std::make_unique<PauseScreen>();
     m_ui = std::make_unique<GameScreenUI>();
 
-    m_background.LoadAnimatedTexture("game_background2");
+    m_background.LoadAnimatedTexture("game_bg");
 
     float paddle_y_pos {game::WINDOW_HEIGHT - p::SIZE.y - game::SCALE * 4};
     Vector2 paddle_position{game::WINDOW_WIDTH / 2.0f - p::SIZE.x / 2, paddle_y_pos};

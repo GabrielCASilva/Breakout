@@ -20,15 +20,15 @@ auto Brick::Update(float dt) -> void {
 auto Brick::Draw() const -> void {
     switch (sprite_positions.size()) {
         case 1: {
-            TextureAtlas<TextureBricksSingle>::DefineTexture2(texture, position);
+            TextureAtlas<TextureBricksSingle>::DefineTexture(texture, position);
             break;
         }
         case 2: {
-            TextureAtlas<TextureBricksDouble>::DefineTexture2(texture, position);
+            TextureAtlas<TextureBricksDouble>::DefineTexture(texture, position);
             break;
         }
         default:
-            TextureAtlas<TextureBricksSingle>::DefineTexture2(texture, position);
+            TextureAtlas<TextureBricksSingle>::DefineTexture(texture, position);
             break;
     }
 }

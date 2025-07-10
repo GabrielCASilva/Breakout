@@ -5,7 +5,12 @@
 #include "raylib.h"
 
 auto Background::LoadAnimatedTexture(std::string &&file) -> void {
-    m_image = LoadImageAnim((game::ROOT + "assets/sprites/" + file + ".gif").c_str(), &m_frame);
+    m_image = LoadImageAnim((game::ROOT + "assets/sprites/background/" + file + ".gif").c_str(), &m_frame);
+    m_texture = LoadTextureFromImage(m_image);
+}
+
+auto Background::LoadTexture(std::string &&file) -> void {
+    m_image = LoadImageAnim((game::ROOT + "assets/sprites/background/" + file + ".png").c_str(), &m_frame);
     m_texture = LoadTextureFromImage(m_image);
 }
 

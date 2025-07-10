@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "Entities/Paddle.h"
-#include "GlobalStates/PlayerData.h"
+#include "States/PlayerData.h"
 #include "Textures/TextureAtlas.h"
 
 Ball::Ball(const Vector2 position): m_position{position} {
@@ -21,9 +21,32 @@ auto Ball::Update(const float dt) -> void {
     }
 }
 
+// TODO: tirar isso da bola
+Vector2 get_normal(const float x, const float y) {
+    float mouse_x = GetMousePosition().x;
+    float mouse_y = GetMousePosition().y;
+
+    float dis_x = mouse_x - x;
+    float dis_y = mouse_y - y;
+
+    float len = std::sqrtf(dis_x * dis_x + dis_y * dis_y);
+    float normal_x = dis_x / len;
+    float normal_y = dis_y / len;
+    normal_x *= 20;
+    normal_y *= 20;
+    return Vector2(normal_x, normal_y);
+}
+
 auto Ball::Draw() const -> void {
     const Rectangle &texture = TextureAtlas<TextureEntities>::GetTextureImage(TextureEntities::BALL);
-    TextureAtlas<TextureEntities>::DefineTexture2(texture, m_position, {texture.width / 2, texture.height / 2});
+    TextureAtlas<TextureEntities>::DefineTexture(texture, m_position, {texture.width / 2, texture.height / 2});
+    if (!m_start_move) {
+        float x = m_position.x;
+        float y = m_position.y;
+        Vector2 n1 = get_normal(x, y);
+        Vector2 n2 = get_normal(x + n1.x, y + n1.y);
+        DrawLineEx({x + n1.x, y + n1.y}, {x + n1.x + n2.x, y + n1.y + n2.y}, 2.0f, RED);
+    }
 }
 
 auto Ball::CheckCollisionWithBrick(const Brick &brick) -> bool {

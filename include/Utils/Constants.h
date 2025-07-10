@@ -21,7 +21,7 @@ namespace game
     } // namespace paddle
 
     namespace ball {
-        constexpr std::uint8_t RADIUS{2*SCALE};
+        constexpr std::uint8_t RADIUS{3*SCALE};
         constexpr float SPEED{120.0f*SCALE};
     } // namespace ball
 
@@ -39,7 +39,9 @@ namespace game
     } // namespace grid
 
     namespace ui {
-        constexpr Vector2 BTN_SIZE{32 * 4, 32};
+        constexpr float SIZE_12{12.0f*SCALE};
+        constexpr float SIZE_16{16.0f*SCALE};
+        constexpr float SIZE_20{20.0f*SCALE};
     }
 
     namespace level {

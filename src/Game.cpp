@@ -4,6 +4,7 @@
 
 #include "Screens/ScreenManager.h"
 #include "Textures/TextureAtlas.h"
+#include "UI/Cursor.h"
 #include "UI/Text.h"
 
 auto Game::Initialize(const int width, const int height, const std::string &title) -> void {
@@ -16,7 +17,7 @@ auto Game::Initialize(const int width, const int height, const std::string &titl
     // Loading Font
     Text::Load("kubasta");
 
-    ScreenManager::ChangeScreen(Screens::GAME);
+    ScreenManager::ChangeScreen(Screens::MENU);
 }
 
 auto Game::GameShouldClose() -> bool {
@@ -37,7 +38,7 @@ auto Game::Draw() -> void {
     BeginDrawing();
     ClearBackground(BLACK);
     ScreenManager::Draw();
-    // DrawFPS(0,0);
+    Cursor::Draw();
     EndDrawing();
 }
 

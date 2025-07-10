@@ -8,11 +8,17 @@
 #include "Utils/Constants.h"
 
 MenuScreenUI::MenuScreenUI() {
-    constexpr float width{game::WINDOW_WIDTH / 2 - game::ui::BTN_SIZE.x / 2};
-    constexpr float height{game::WINDOW_HEIGHT / 2.0f + 100};
-    m_buttons[0] = std::make_unique<Button>(Vector2{width, height - 50}, "START");
-    m_buttons[1] = std::make_unique<Button>(Vector2{width, height}, "CREDITS");
-    m_buttons[2] = std::make_unique<Button>(Vector2{width, height + 50}, "QUIT");
+    constexpr float width{game::WINDOW_WIDTH / 2.0f};
+    constexpr float height{game::WINDOW_HEIGHT / 2.0f};
+    constexpr float gap{20 * game::SCALE};
+    m_buttons[0] = std::make_unique<Button>(Vector2{width, height}, "START",
+                                            FontTypes::SIZE_20, ButtonOrigins::CENTER);
+
+
+    m_buttons[1] = std::make_unique<Button>(Vector2{width, height + gap}, "CREDITS",
+                                            FontTypes::SIZE_20, ButtonOrigins::CENTER);
+    m_buttons[2] = std::make_unique<Button>(Vector2{width, height + 2 * gap}, "QUIT",
+                                            FontTypes::SIZE_20, ButtonOrigins::CENTER);
 
     m_buttons[0]->SetOnClick([](const bool hovered, const bool pressed) {
         if (hovered && pressed) ScreenManager::ChangeScreen(Screens::GAME);
@@ -42,9 +48,6 @@ auto MenuScreenUI::Update() -> void {
 
 
 auto MenuScreenUI::Draw() const -> void {
-    constexpr auto width{static_cast<float>(game::WINDOW_WIDTH / 2 - 380 / 2)};
-    constexpr auto height{static_cast<float>(game::WINDOW_HEIGHT / 2 - 100)};
-    DrawText("BREAKOUT CLONE", width, height, 40, WHITE);
     for (const auto &button: m_buttons) {
         button->Draw();
     }
