@@ -18,19 +18,16 @@ auto Button::Draw() const -> void {
             m_position.y + game::SCALE
         );
         TextureAtlas<TextureEntities>::DefineTexture(texture, position);
-
         const auto position2 = Vector2(
             m_position.x + m_size.x + 2 * game::SCALE,
             m_position.y + game::SCALE
         );
         TextureAtlas<TextureEntities>::DefineTexture(texture, position2);
     }
-
     Text::Draw(FontTypes::SIZE_20, m_text, m_textPosition, WHITE);
 }
 
 auto Button::DefineButtonAlign(const ButtonOrigins &origin) -> void {
-    std::cout << static_cast<int>(origin) << std::endl;
     switch (origin) {
         case ButtonOrigins::CENTER:
             m_position.x -= m_size.x / 2.0f;

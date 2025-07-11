@@ -5,15 +5,6 @@
 #include "Utils/Constants.h"
 
 class Paddle final : public IEntity {
-    Vector2 position;
-    Vector2 size{game::paddle::SIZE};
-    Color color{WHITE};
-    float speed{game::paddle::SPEED};
-
-    auto Move(float dt) -> void;
-
-    auto StayOnBounds() -> void;
-
 public:
     Paddle() = delete;
 
@@ -32,13 +23,18 @@ public:
     auto OnCollision(const IEntity &entity) -> void override;
 
     // inlines
-    [[nodiscard]] auto GetPosition() const -> const Vector2 & {
-        return position;
-    }
+    [[nodiscard]] auto GetPosition() const -> const Vector2 & { return m_position; }
 
-    [[nodiscard]] auto GetSize() const -> const Vector2 & {
-        return size;
-    }
+    [[nodiscard]] auto GetSize() const -> const Vector2 & { return m_size; }
 
+private:
+    Vector2 m_position;
+    Vector2 m_size{game::paddle::SIZE};
+    Color m_color{WHITE};
+    float m_speed{game::paddle::SPEED};
+
+    auto Move(float dt) -> void;
+
+    auto StayOnBounds() -> void;
 };
 #endif //PADDLE_H

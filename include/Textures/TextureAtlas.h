@@ -32,7 +32,8 @@ enum class TextureEntities: std::uint8_t {
     PADDLE,
     BALL,
     TITLE,
-    CURSOR,
+    CURSOR_NORMAL,
+    CURSOR_HOVER,
     BTN_SELECTED_INDICATOR,
     LEN
 };
@@ -66,7 +67,8 @@ constexpr std::array<Rectangle, static_cast<int>(TextureEntities::LEN)> Entities
         {0, 8 * 4, 8 * 5, 4}, // paddle
         {8 * 7, 8 * 4, 8, 8}, // ball
         {0, 8 * 5, 8 * 23, 8 * 4}, // title
-        {8 * 10, 8 * 3, 8, 8}, // cursor
+        {8 * 10, 8 * 3, 8, 8}, // cursor normal
+        {8 * 11, 8 * 3, 8, 8}, // cursor hover
         {8 * 8, 8 * 4, 8, 8}, // button selected indicator
     }
 };
@@ -78,7 +80,7 @@ class TextureAtlas {
     static inline bool loaded = false;
 
 public:
-    static auto Load(const std::array<Rectangle, static_cast<std::size_t>(T::LEN)>& _atlas) -> void;
+    static auto Load(const std::array<Rectangle, static_cast<std::size_t>(T::LEN)> &_atlas) -> void;
 
     static auto Unload() -> void;
 
@@ -89,8 +91,10 @@ public:
     static auto GetRandomTextureImage(int max) -> T;
 
     // TODO: Some parts of this code are C like, change (float) to static_cast in de future
-    static auto DefineTexture(const Rectangle &src, const Vector2 &position, const Vector2 origin = {0,0}) -> void {
-        const Rectangle dest = { position.x, position.y, (float)src.width*game::SCALE, (float)src.height*game::SCALE };
+    static auto DefineTexture(const Rectangle &src, const Vector2 &position, const Vector2 origin = {0, 0}) -> void {
+        const Rectangle dest = {
+            position.x, position.y, (float) src.width * game::SCALE, (float) src.height * game::SCALE
+        };
         const Vector2 originScaled = {origin.x * game::SCALE, origin.y * game::SCALE};
         DrawTexturePro(texture, src, dest, originScaled, 0.0, WHITE);
     }

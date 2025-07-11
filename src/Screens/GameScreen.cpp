@@ -5,6 +5,7 @@
 #include "Bricks/BrickLoader.h"
 #include "States/PlayerData.h"
 #include "Screens/ScreenManager.h"
+#include "UI/Cursor.h"
 #include "Utils/Constants.h"
 #include "Utils/Grid.h"
 

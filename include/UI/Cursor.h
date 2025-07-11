@@ -18,19 +18,24 @@ public:
     ~Cursor() = delete;
 
     static auto Draw() -> void {
-        const Rectangle &texture = TextureAtlas<TextureEntities>::GetTextureImage(
-            TextureEntities::CURSOR);
+        if (!m_isDisabled) {
+            const Rectangle &texture = !m_isHovered
+                                           ? TextureAtlas<TextureEntities>::GetTextureImage(
+                                               TextureEntities::CURSOR_NORMAL)
+                                           : TextureAtlas<TextureEntities>::GetTextureImage(
+                                               TextureEntities::CURSOR_HOVER);
 
-        const Vector2 mouse = GetMousePosition();
-        TextureAtlas<TextureEntities>::DefineTexture(
-            texture,
-            mouse
-        );
+            const Vector2 mouse = GetMousePosition();
+            TextureAtlas<TextureEntities>::DefineTexture(
+                texture,
+                mouse
+            );
+        }
     }
 
     static auto SetIsHovered(const bool isHovered) -> void { m_isHovered = isHovered; }
 
-    static auto Disable(const bool isDisabled) -> void { m_isDisabled = isDisabled; }
+    static auto SetIsDisable(const bool isDisabled) -> void { m_isDisabled = isDisabled; }
 
     static auto SetTexture(const Rectangle &texture) -> void { m_texture = texture; }
 

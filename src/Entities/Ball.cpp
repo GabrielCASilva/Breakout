@@ -22,30 +22,32 @@ auto Ball::Update(const float dt) -> void {
 }
 
 // TODO: tirar isso da bola
-Vector2 get_normal(const float x, const float y) {
-    float mouse_x = GetMousePosition().x;
-    float mouse_y = GetMousePosition().y;
+Vector2 get_normal(const float x, const float y, const float lineLen) {
+    const float mouse_x = GetMousePosition().x;
+    const float mouse_y = GetMousePosition().y;
 
-    float dis_x = mouse_x - x;
-    float dis_y = mouse_y - y;
+    const float dis_x = mouse_x - x;
+    const float dis_y = mouse_y - y;
 
-    float len = std::sqrtf(dis_x * dis_x + dis_y * dis_y);
+    const float len = std::sqrtf(dis_x * dis_x + dis_y * dis_y);
     float normal_x = dis_x / len;
     float normal_y = dis_y / len;
-    normal_x *= 20;
-    normal_y *= 20;
+    normal_x *= lineLen;
+    normal_y *= lineLen;
     return Vector2(normal_x, normal_y);
 }
 
 auto Ball::Draw() const -> void {
     const Rectangle &texture = TextureAtlas<TextureEntities>::GetTextureImage(TextureEntities::BALL);
     TextureAtlas<TextureEntities>::DefineTexture(texture, m_position, {texture.width / 2, texture.height / 2});
+
+    // TODO: fazer uma função para isso e retirar e chamar no Draw
     if (!m_start_move) {
-        float x = m_position.x;
-        float y = m_position.y;
-        Vector2 n1 = get_normal(x, y);
-        Vector2 n2 = get_normal(x + n1.x, y + n1.y);
-        DrawLineEx({x + n1.x, y + n1.y}, {x + n1.x + n2.x, y + n1.y + n2.y}, 2.0f, RED);
+        const float x = m_position.x;
+        const float y = m_position.y;
+        const Vector2 n1 = get_normal(x, y, 7 * game::SCALE);
+        const Vector2 n2 = get_normal(x + n1.x, y + n1.y, 8 * game::SCALE);
+        DrawLineEx({x + n1.x, y + n1.y}, {x + n1.x + n2.x, y + n1.y + n2.y}, game::SCALE, RED);
     }
 }
 
@@ -148,11 +150,11 @@ auto Ball::Move(const float dt) -> void {
 
 auto Ball::StayOnBounds() -> void {
     if (m_position.x > (game::WINDOW_WIDTH - game::SCALE * 2)) {
-        m_position.x = static_cast<float>(game::WINDOW_WIDTH - m_radius - game::SCALE);
+        m_position.x = static_cast<float>(game::WINDOW_WIDTH - m_radius - game::SCALE * 2);
         this->Bounce(true, false);
     }
 
-    if (m_position.x < game::SCALE) {
+    if (m_position.x < game::SCALE + m_radius) {
         m_position.x = static_cast<float>(game::SCALE + m_radius);
         this->Bounce(true, false);
     }
