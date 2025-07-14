@@ -24,25 +24,31 @@ public:
 
     auto LoadAnimatedTexture(std::string &&file) -> void;
 
-    auto LoadTexture(std::string &&file) -> void;
+    auto LoadTexture(const std::string &file) -> void;
 
     auto UpdateAnimation() -> void;
 
     auto Draw() const -> void;
 
-    auto UnloadBackgroundTexture() const -> void;
+    auto Unload() const -> void;
 
-    auto UnloadBackgroundImage() const -> void;
+    auto SetPosition(const Vector2 &position) -> void { m_position = position; }
+
+    [[nodiscard]] auto GetTexture() -> Texture& { return m_texture; }
+    [[nodiscard]] auto GetImage() -> Image& { return m_image; }
+    [[nodiscard]] auto GetPosition() -> Vector2& { return m_position; }
 
 private:
+    Vector2 m_position{};
+    Texture2D m_texture{};
+    Image m_image{};
+
+    // animation relatable variables
     int m_frame{0};
     int m_frame_current{0};
     unsigned int m_next_frame{0};
     std::uint16_t m_frame_count{0};
     std::uint16_t m_frame_delay{24};
-    Texture2D m_texture{};
-    Image m_image{};
-    Vector2 m_position{};
 };
 
 #endif //BACKGROUND_H

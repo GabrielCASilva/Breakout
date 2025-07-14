@@ -93,7 +93,6 @@ auto GameScreen::ChangeLevel(const std::string& level) -> void {
 }
 
 auto GameScreen::Exit() -> void {
-    m_background.UnloadBackgroundTexture();
-    m_background.UnloadBackgroundImage();
+    m_background.Unload();
     PlayerData::Reset();
 }

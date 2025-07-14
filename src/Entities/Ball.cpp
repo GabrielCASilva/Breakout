@@ -149,7 +149,7 @@ auto Ball::Move(const float dt) -> void {
 }
 
 auto Ball::StayOnBounds() -> void {
-    if (m_position.x > (game::WINDOW_WIDTH - game::SCALE * 2)) {
+    if (m_position.x > (game::WINDOW_WIDTH - m_radius - game::SCALE * 2)) {
         m_position.x = static_cast<float>(game::WINDOW_WIDTH - m_radius - game::SCALE * 2);
         this->Bounce(true, false);
     }

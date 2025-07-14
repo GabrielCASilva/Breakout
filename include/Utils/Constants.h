@@ -11,9 +11,10 @@ namespace game
     constexpr std::string ROOT{"../"};
     constexpr std::uint8_t SCALE{4};
     constexpr std::uint16_t WINDOW_WIDTH{320*SCALE};
-    constexpr std::uint16_t WINDOW_HEIGHT{240*SCALE};
+    constexpr std::uint16_t WINDOW_HEIGHT{240*SCALE}; // 240
     constexpr std::uint8_t FPS{144};
     constexpr std::uint8_t PIXELS_PER_METTER{100};
+    constexpr Color BACKGROUND_COLOR{5,5,15,255}; // 05050f
 
     namespace paddle {
         constexpr Vector2 SIZE{8 * 5 * SCALE, 8 * SCALE};

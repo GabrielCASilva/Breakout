@@ -36,7 +36,7 @@ auto Game::Update() -> void {
 
 auto Game::Draw() -> void {
     BeginDrawing();
-    ClearBackground(BLACK);
+    ClearBackground(game::BACKGROUND_COLOR);
     ScreenManager::Draw();
     Cursor::Draw();
     EndDrawing();

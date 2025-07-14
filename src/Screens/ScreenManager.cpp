@@ -10,6 +10,7 @@
 std::unique_ptr<IScreen> ScreenManager::current_screen = nullptr;
 
 auto ScreenManager::ChangeScreen(const Screens screen) -> void {
+    m_screen_changed = true;
     if (current_screen) {
         current_screen->Exit();
     }

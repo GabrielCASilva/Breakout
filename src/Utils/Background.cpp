@@ -9,11 +9,12 @@ auto Background::LoadAnimatedTexture(std::string &&file) -> void {
     m_texture = LoadTextureFromImage(m_image);
 }
 
-auto Background::LoadTexture(std::string &&file) -> void {
+auto Background::LoadTexture(const std::string &file) -> void {
     m_image = LoadImageAnim((game::ROOT + "assets/sprites/background/" + file + ".png").c_str(), &m_frame);
     m_texture = LoadTextureFromImage(m_image);
 }
 
+// TODO: remove C like code
 auto Background::Draw() const -> void {
     Rectangle source = { 0.0f, 0.0f, (float)m_texture.width, (float)m_texture.height };
     Rectangle dest = { m_position.x, m_position.y, (float)m_texture.width*game::SCALE, (float)m_texture.height*game::SCALE };
@@ -40,10 +41,7 @@ auto Background::UpdateAnimation() -> void {
     }
 }
 
-auto Background::UnloadBackgroundTexture() const -> void {
-    UnloadTexture(m_texture);
-}
-
-auto Background::UnloadBackgroundImage() const -> void {
+auto Background::Unload() const -> void {
     UnloadImage(m_image);
+    UnloadTexture(m_texture);
 }

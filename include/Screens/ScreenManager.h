@@ -12,8 +12,11 @@ public:
      static auto Update(float dt) -> void;
      static auto Draw() -> void;
      static auto Exit() -> void;
+
 private:
      static std::unique_ptr<IScreen> current_screen;
+     static inline bool m_screen_changed = false;
+
 };
 
 #endif //SCREEN_MANAGER_H
