@@ -52,9 +52,9 @@ constexpr std::array<float,
 constexpr std::array<MinMax,
     static_cast<std::size_t>(BackgroundsLayers::LEN)> s_planets_translations_cap = {
     {
-        {-50.f, 80.f},
-        {-100.f, 120.f},
-        {-150.f, 140.f}
+        {-12.5f * game::SCALE, 20.f * game::SCALE},
+        {-25.f * game::SCALE, 30.f * game::SCALE},
+        {-37.5f * game::SCALE, 35.f * game::SCALE}
     }
 };
 

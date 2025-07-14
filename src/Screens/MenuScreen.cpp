@@ -68,6 +68,8 @@ auto MenuScreen::UnloadBackgrounds() -> void {
         bg.SetDisable(true);
     for (auto &planet: m_planets)
         planet.UnloadSprite();
+    for (auto &planet: m_planets)
+        planet.SetDisable(true);
 }
 
 auto MenuScreen::AnimatePlanets(const float dt) -> void {
