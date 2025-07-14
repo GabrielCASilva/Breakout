@@ -1,16 +1,24 @@
 #ifndef DRAW_SPRITE_H
 #define DRAW_SPRITE_H
+#include <iostream>
+
 #include "Constants.h"
 #include "raylib.h"
 
+struct FlipImage {
+    int x;
+    int y;
+};
+
 class DrawSprite {
 public:
-    static auto Draw(const Texture2D &texture, const Vector2 &position, const Color tint = WHITE) -> void {
+    static auto Draw(const Texture2D &texture, const Vector2 &position,
+                     const FlipImage &flip = {1,1}, const Color tint = WHITE) -> void {
         const Rectangle source = {
             0.0f,
             0.0f,
-            static_cast<float>(texture.width),
-            static_cast<float>(texture.height)
+            static_cast<float>(texture.width) * flip.x,
+            static_cast<float>(texture.height) * flip.y
         };
         const Rectangle dest = {
             position.x,
@@ -24,13 +32,14 @@ public:
     }
 
     static auto Draw(const Texture2D &texture, const Vector2 &position,
-                     const Vector2 &origin, const float rotation = 0.0f, const Color tint = WHITE
+                     const Vector2 &origin, const float rotation = 0.0f,
+                     const FlipImage &flip = {1, 1}, const Color tint = WHITE
     ) -> void {
         const Rectangle source = {
             0.0f,
             0.0f,
-            static_cast<float>(texture.width),
-            static_cast<float>(texture.height)
+            static_cast<float>(texture.width) * flip.x,
+            static_cast<float>(texture.height) * flip.y
         };
         const Rectangle dest = {
             position.x,

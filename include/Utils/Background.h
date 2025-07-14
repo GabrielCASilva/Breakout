@@ -34,9 +34,9 @@ public:
 
     auto SetPosition(const Vector2 &position) -> void { m_position = position; }
 
-    [[nodiscard]] auto GetTexture() -> Texture& { return m_texture; }
-    [[nodiscard]] auto GetImage() -> Image& { return m_image; }
-    [[nodiscard]] auto GetPosition() -> Vector2& { return m_position; }
+    [[nodiscard]] auto GetTexture() -> Texture & { return m_texture; }
+    [[nodiscard]] auto GetImage() -> Image & { return m_image; }
+    [[nodiscard]] auto GetPosition() -> Vector2 & { return m_position; }
 
 private:
     Vector2 m_position{};
