@@ -32,7 +32,7 @@ enum class BackgroundPlanets {
 };
 
 constexpr std::array<Vector2,
-    static_cast<std::size_t>(BackgroundsLayers::LEN)> s_planets_position = {
+    static_cast<std::size_t>(BackgroundPlanets::LEN)> s_planets_position = {
     {
         {100.f * game::SCALE, game::WINDOW_HEIGHT / 2 + 70.f * game::SCALE},
         {30.f * game::SCALE, game::WINDOW_HEIGHT / 2 + 70.f * game::SCALE},
@@ -41,7 +41,7 @@ constexpr std::array<Vector2,
 };
 
 constexpr std::array<float,
-    static_cast<std::size_t>(BackgroundsLayers::LEN)> s_planets_translations = {
+    static_cast<std::size_t>(BackgroundPlanets::LEN)> s_planets_translations = {
     {
         game::SCALE,
         4 * game::SCALE,
@@ -50,7 +50,7 @@ constexpr std::array<float,
 };
 
 constexpr std::array<MinMax,
-    static_cast<std::size_t>(BackgroundsLayers::LEN)> s_planets_translations_cap = {
+    static_cast<std::size_t>(BackgroundPlanets::LEN)> s_planets_translations_cap = {
     {
         {-12.5f * game::SCALE, 20.f * game::SCALE},
         {-25.f * game::SCALE, 30.f * game::SCALE},

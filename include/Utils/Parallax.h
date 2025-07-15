@@ -22,7 +22,6 @@ public:
 
     ~Parallax() {
         delete m_sprite;
-        m_disable = true;
     }
 
     reference operator=(const_reference) = delete;

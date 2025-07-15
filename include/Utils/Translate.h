@@ -24,7 +24,6 @@ public:
 
     ~Translate() {
         delete m_sprite;
-        m_disable = true;
     }
 
     reference operator=(const_reference) = delete;
@@ -82,8 +81,8 @@ public:
 
 private:
     pointer m_sprite{new T()};
-    Vector2 m_init_position{};
+    Vector2 m_init_position{0.f, 0.f};
     bool m_disable{false};
     Vector2 m_direction{1,1};
-    Vector2 m_translate{};
+    Vector2 m_translate{0.f, 0.f};
 };

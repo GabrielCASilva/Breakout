@@ -7,36 +7,36 @@
 #include "Screens/Screens.h"
 #include "Screens/WinScreen.h"
 
-std::unique_ptr<IScreen> ScreenManager::current_screen = nullptr;
-
 auto ScreenManager::ChangeScreen(const Screens screen) -> void {
-    m_screen_changed = true;
-    if (current_screen) {
-        current_screen->Exit();
-    }
-
     switch (screen) {
         case Screens::GAME:
-            current_screen = std::make_unique<GameScreen>();
+            next_screen = std::make_unique<GameScreen>();
             break;
         case Screens::MENU:
-            current_screen = std::make_unique<MenuScreen>();
+            next_screen = std::make_unique<MenuScreen>();
             break;
         case Screens::WIN:
-            current_screen = std::make_unique<WinScreen>();
+            next_screen = std::make_unique<WinScreen>();
             break;
         case Screens::CREDITS:
-            current_screen = std::make_unique<CreditsScreen>();
+            next_screen = std::make_unique<CreditsScreen>();
             break;
         case Screens::GAME_OVER:
-            current_screen = std::make_unique<GameOverScreen>();
+            next_screen = std::make_unique<GameOverScreen>();
             break;
         default:
-            current_screen = std::make_unique<MenuScreen>();
+            next_screen = std::make_unique<MenuScreen>();
+            break;
     }
+    m_screen_changed = true;
+}
 
-    if (current_screen) {
-        current_screen->Init();
+auto ScreenManager::UpdateCurrentScreen() -> void {
+    if (m_screen_changed) {
+        m_screen_changed = false;
+        Exit();
+        current_screen = std::move(next_screen);
+        Init();
     }
 }
 
@@ -45,11 +45,11 @@ auto ScreenManager::Init() -> void {
 }
 
 auto ScreenManager::Update(const float dt) -> void {
-    if (current_screen) current_screen->Update(dt);
+    if (current_screen && !m_screen_changed) current_screen->Update(dt);
 }
 
 auto ScreenManager::Draw() -> void {
-    if (current_screen) current_screen->Draw();
+    if (current_screen && !m_screen_changed) current_screen->Draw();
 }
 
 auto ScreenManager::Exit() -> void {

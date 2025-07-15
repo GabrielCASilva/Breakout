@@ -27,6 +27,7 @@ auto Game::GameShouldClose() -> bool {
 auto Game::Tick() -> void {
     Update();
     Draw();
+    ScreenManager::UpdateCurrentScreen();
 }
 
 auto Game::Update() -> void {
