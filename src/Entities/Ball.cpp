@@ -77,7 +77,7 @@ auto Ball::CheckCollisionWithBrick(const Brick &brick) -> bool {
         const float min_overlap_y = std::min(overlap_top, overlap_bottom);
 
         if (std::abs(min_overlap_x - min_overlap_y) < 1.0f * game::SCALE) {
-            Bounce(true,true);
+            Bounce(true, true);
         } else if (min_overlap_x < min_overlap_y) {
             // correção da posição da bola
             m_position.x = overlap_left < overlap_right
@@ -149,13 +149,19 @@ auto Ball::Move(const float dt) -> void {
 }
 
 auto Ball::StayOnBounds() -> void {
-    if (m_position.x > (game::WINDOW_WIDTH - m_radius - game::SCALE * 2)) {
-        m_position.x = static_cast<float>(game::WINDOW_WIDTH - m_radius - game::SCALE * 2);
+    if (
+        constexpr float screen_right{game::WINDOW_WIDTH - game::ball::RADIUS - game::SCALE * 2.f};
+        m_position.x > screen_right
+    ) {
+        m_position.x = screen_right;
         this->Bounce(true, false);
     }
 
-    if (m_position.x < game::SCALE + m_radius) {
-        m_position.x = static_cast<float>(game::SCALE + m_radius);
+    if (
+        constexpr float screen_left{static_cast<float>(game::SCALE + game::ball::RADIUS)};
+        m_position.x < screen_left
+    ) {
+        m_position.x = screen_left;
         this->Bounce(true, false);
     }
 
@@ -164,8 +170,10 @@ auto Ball::StayOnBounds() -> void {
         Reset();
     }
 
-    if (m_position.y < 0) {
-        m_position.y = static_cast<float>(game::SCALE + m_radius);
+    if (
+        constexpr float screen_top{game::SCALE + game::ball::RADIUS};
+        m_position.y < screen_top) {
+        m_position.y = screen_top;
         this->Bounce(false, true);
     }
 }

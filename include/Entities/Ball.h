@@ -39,6 +39,14 @@ public:
     }
 
 private:
+    auto MakeItMove() -> void;
+
+    auto Move(float dt) -> void;
+
+    auto StayOnBounds() -> void;
+
+    [[nodiscard]] auto ModifyAngle(float hit_pos, float normalized_hit) const -> float;
+
     Vector2 m_position;
     std::uint8_t m_radius{game::ball::RADIUS};
     Color m_color{GOLD};
@@ -47,14 +55,6 @@ private:
 
     bool m_start_move{false};
     Vector2 m_init_position{m_position};
-
-    auto MakeItMove() -> void;
-
-    auto Move(float dt) -> void;
-
-    auto StayOnBounds() -> void;
-
-    [[nodiscard]] auto ModifyAngle(float hit_pos, float normalized_hit) const -> float;
 };
 
 #endif //BALL_H

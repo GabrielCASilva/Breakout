@@ -24,7 +24,7 @@ auto Button::Draw() const -> void {
         );
         TextureAtlas<TextureEntities>::DefineTexture(texture, position2);
     }
-    Text::Draw(FontTypes::SIZE_20, m_text, m_textPosition, WHITE);
+    Text::Draw(m_type, m_text, m_textPosition, WHITE);
 }
 
 auto Button::DefineButtonAlign(const ButtonOrigins &origin) -> void {

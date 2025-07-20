@@ -6,29 +6,29 @@
 
 #include "raylib.h"
 
-namespace game
-{
+namespace game {
     constexpr std::string ROOT{"../"};
     constexpr std::uint8_t SCALE{4};
-    constexpr std::uint16_t WINDOW_WIDTH{320*SCALE};
-    constexpr std::uint16_t WINDOW_HEIGHT{240*SCALE}; // 240
+    constexpr std::uint16_t WINDOW_WIDTH{320 * SCALE};
+    constexpr std::uint16_t WINDOW_HEIGHT{240 * SCALE}; // 240
     constexpr std::uint8_t FPS{144};
     constexpr std::uint8_t PIXELS_PER_METTER{100};
-    constexpr Color BACKGROUND_COLOR{5,5,15,255}; // 05050f
+    constexpr Color BACKGROUND_COLOR{5, 5, 15, 255}; // 05050f
+    constexpr Color PAUSE_BACKGROUND_COLOR{5, 5, 15, 210};
 
     namespace paddle {
-        constexpr Vector2 SIZE{8 * 5 * SCALE, 8 * SCALE};
-        constexpr float SPEED{120.0f*SCALE};
+        constexpr Vector2 SIZE{8 * 5 * SCALE, 8 / 2.0f * SCALE};
+        constexpr float SPEED{120.0f * SCALE};
     } // namespace paddle
 
     namespace ball {
-        constexpr std::uint8_t RADIUS{3*SCALE};
-        constexpr float SPEED{120.0f*SCALE};
+        constexpr std::uint8_t RADIUS{3 * SCALE};
+        constexpr float SPEED{120.0f * SCALE};
     } // namespace ball
 
     namespace grid {
-        constexpr Color COLOR{255,255,255,50};
-        constexpr std::uint8_t SIZE{8*SCALE};
+        constexpr Color COLOR{255, 255, 255, 50};
+        constexpr std::uint8_t SIZE{8 * SCALE};
         constexpr std::uint8_t O_SIZE{8};
         constexpr std::uint8_t MARGIN_UP{3};
         constexpr std::uint8_t MARGIN_DOWN{6};
@@ -40,9 +40,10 @@ namespace game
     } // namespace grid
 
     namespace ui {
-        constexpr float SIZE_12{12.0f*SCALE};
-        constexpr float SIZE_16{16.0f*SCALE};
-        constexpr float SIZE_20{20.0f*SCALE};
+        constexpr float SIZE_12{12.0f * SCALE};
+        constexpr float SIZE_16{16.0f * SCALE};
+        constexpr float SIZE_20{20.0f * SCALE};
+        constexpr float SIZE_32{32.0f * SCALE};
     }
 
     namespace level {

@@ -22,19 +22,18 @@ public:
 
     auto OnCollision(const IEntity &entity) -> void override;
 
-    // inlines
     [[nodiscard]] auto GetPosition() const -> const Vector2 & { return m_position; }
 
     [[nodiscard]] auto GetSize() const -> const Vector2 & { return m_size; }
 
 private:
+    auto Move(float dt) -> void;
+
+    auto StayOnBounds() -> void;
+
     Vector2 m_position;
     Vector2 m_size{game::paddle::SIZE};
     Color m_color{WHITE};
     float m_speed{game::paddle::SPEED};
-
-    auto Move(float dt) -> void;
-
-    auto StayOnBounds() -> void;
 };
 #endif //PADDLE_H

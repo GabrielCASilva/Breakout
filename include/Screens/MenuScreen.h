@@ -71,6 +71,14 @@ public:
     auto Exit() -> void override;
 
 private:
+    auto InitializeBackgrounds() -> void;
+
+    auto UnloadBackgrounds() -> void;
+
+    auto AnimatePlanets(float dt) -> void;
+
+    static auto DrawTittle() -> void;
+
     std::unique_ptr<MenuScreenUI> m_ui{std::make_unique<MenuScreenUI>()};
     Background m_bg{};
     Background m_bg_planets{};
@@ -80,14 +88,6 @@ private:
 
     std::array<Translate<Background>,
         static_cast<std::size_t>(BackgroundPlanets::LEN)> m_planets{};
-
-    auto InitializeBackgrounds() -> void;
-
-    auto UnloadBackgrounds() -> void;
-
-    auto AnimatePlanets(float dt) -> void;
-
-    static auto DrawTittle() -> void;
 };
 
 #endif //MENU_SCREEN_H

@@ -19,9 +19,9 @@ auto GameScreen::Init() -> void {
 
     m_background.LoadAnimatedTexture("game_bg");
 
-    float paddle_y_pos {game::WINDOW_HEIGHT - p::SIZE.y - game::SCALE * 4};
+    constexpr float paddle_y_pos {game::WINDOW_HEIGHT - p::SIZE.y - game::SCALE * 4};
     Vector2 paddle_position{game::WINDOW_WIDTH / 2.0f - p::SIZE.x / 2, paddle_y_pos};
-    Vector2 ball_position{game::WINDOW_WIDTH / 2.0f, paddle_y_pos - p::SIZE.y};
+    Vector2 ball_position{game::WINDOW_WIDTH / 2.0f, paddle_y_pos - p::SIZE.y * 2};
 
     paddle = std::make_unique<Paddle>(paddle_position);
     ball = std::make_unique<Ball>(ball_position);
@@ -65,10 +65,7 @@ auto GameScreen::Update(const float dt) -> void {
 }
 
 auto GameScreen::Draw() -> void {
-    if (m_pause_screen->GetContinue()) {
-        m_pause_screen->Draw();
-        return;
-    }
+
     m_background.Draw();
     DrawRectangle(1*game::SCALE, 1*game::SCALE, game::WINDOW_WIDTH - game::SCALE*2, game::WINDOW_HEIGHT, { 0, 0, 0, 100 });
     // Grid::Draw();
@@ -76,6 +73,10 @@ auto GameScreen::Draw() -> void {
     paddle->Draw();
     ball->Draw();
     bricks->Draw();
+
+    if (m_pause_screen->GetContinue()) {
+        m_pause_screen->Draw();
+    }
 
 }
 

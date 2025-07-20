@@ -11,7 +11,7 @@
 MenuScreenUI::MenuScreenUI() {
     constexpr float width{game::WINDOW_WIDTH / 2.0f};
     constexpr float height{game::WINDOW_HEIGHT / 2.0f};
-    constexpr float gap{20 * game::SCALE};
+    constexpr float gap{16 * game::SCALE};
     m_buttons[0] = std::make_unique<Button>(Vector2{width, height}, "START",
                                             FontTypes::SIZE_20, ButtonOrigins::CENTER);
     m_buttons[1] = std::make_unique<Button>(Vector2{width, height + gap}, "CREDITS",

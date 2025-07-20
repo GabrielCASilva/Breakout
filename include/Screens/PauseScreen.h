@@ -25,7 +25,7 @@ public:
         m_ui->SetContinue(cnt_game);
     }
 private:
-    std::string m_text{"Pausado"};
+    std::string m_text{"PAUSED"};
     std::unique_ptr<PauseScreenUI> m_ui{std::make_unique<PauseScreenUI>()};
 };
 

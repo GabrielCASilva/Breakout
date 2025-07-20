@@ -25,8 +25,6 @@ public:
 private:
     std::array<std::unique_ptr<Button>, 4> m_buttons{};
     bool m_continue{false};
-
-    auto ShowPlayerData() const -> void;
 };
 
 #endif //PAUSE_SCREEN_UI_H

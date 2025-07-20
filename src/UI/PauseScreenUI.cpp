@@ -11,14 +11,15 @@
 
 PauseScreenUI::PauseScreenUI() {
     constexpr float width{game::WINDOW_WIDTH / 2.0f};
-    constexpr float height{game::WINDOW_HEIGHT / 2.0f + 100};
-    m_buttons[0] = std::make_unique<Button>(Vector2{width, height - 50}, "CONTINUE", FontTypes::SIZE_20,
+    constexpr float height{game::WINDOW_HEIGHT / 2.5f};
+    constexpr float gap{20 * game::SCALE};
+    m_buttons[0] = std::make_unique<Button>(Vector2{width, height}, "CONTINUE", FontTypes::SIZE_20,
                                             ButtonOrigins::CENTER);
-    m_buttons[1] = std::make_unique<Button>(Vector2{width, height}, "RESTART", FontTypes::SIZE_20,
+    m_buttons[1] = std::make_unique<Button>(Vector2{width, height + gap}, "RESTART", FontTypes::SIZE_20,
                                             ButtonOrigins::CENTER);
-    m_buttons[2] = std::make_unique<Button>(Vector2{width, height + 50}, "TITLE SCREEN", FontTypes::SIZE_20,
+    m_buttons[2] = std::make_unique<Button>(Vector2{width, height + 2*gap}, "MAIN MENU", FontTypes::SIZE_20,
                                             ButtonOrigins::CENTER);
-    m_buttons[3] = std::make_unique<Button>(Vector2{width, height + 100}, "QUIT", FontTypes::SIZE_20,
+    m_buttons[3] = std::make_unique<Button>(Vector2{width, height + 3*gap}, "QUIT", FontTypes::SIZE_20,
                                             ButtonOrigins::CENTER);
 
     m_buttons[0]->SetOnClick([this](const bool hovered, const bool pressed) {
@@ -62,18 +63,8 @@ auto PauseScreenUI::Update() -> void {
 }
 
 auto PauseScreenUI::Draw() const -> void {
-    ShowPlayerData();
 
     for (const auto &button: m_buttons) {
         button->Draw();
     }
-}
-
-auto PauseScreenUI::ShowPlayerData() const -> void {
-    const auto lives{"Lives " + std::to_string(PlayerData::GetLives())};
-    const auto points{"Points " + std::to_string(PlayerData::GetPoints())};
-    // const auto level {"Level " + std::to_string(m_level)};
-
-    DrawText(lives.c_str(), 200, 200, 20, WHITE);
-    DrawText(points.c_str(), 200, 250, 20, WHITE);
 }

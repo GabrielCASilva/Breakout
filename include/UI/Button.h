@@ -16,7 +16,7 @@ class Button {
 public:
     Button(const Vector2 position, std::string &&text,
            FontTypes &&type = FontTypes::SIZE_20, ButtonOrigins &&origin = ButtonOrigins::START)
-        : m_position(position), m_text(text) {
+        : m_position(position), m_type(type), m_text(text) {
         m_size = Text::Measure(type, m_text);
         m_size.x = m_size.x - game::SCALE;
         m_size.y /= 2;
@@ -44,8 +44,13 @@ public:
     [[nodiscard]] auto IsPressed() const -> bool { return m_isPressed; }
 
 private:
+    auto DefineButtonAlign(const ButtonOrigins &origin) -> void;
+
+    std::function<void(bool, bool)> m_callback{nullptr};
+
     Vector2 m_position{};
     Vector2 m_size{};
+    FontTypes m_type{};
 
     std::string m_text{};
     Vector2 m_textPosition{}; // text position relate to button
@@ -53,9 +58,6 @@ private:
     bool m_isHovered{false};
     bool m_isPressed{false};
 
-    std::function<void(bool, bool)> m_callback{nullptr};
-
-    auto DefineButtonAlign(const ButtonOrigins &origin) -> void;
 };
 
 #endif //BUTTON_H
