@@ -41,16 +41,17 @@ This project uses **CMake** and automatically downloads Raylib via `FetchContent
 ```bash
 # Clone the repository
 git clone https://github.com/GabrielCASilva/Breakout.git
-cd breakout-raylib
+cd Breakout
 
 # Generate build files
-cmake -B build -S .
+cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
 
 # Build the game
 cmake --build build
 
 # Run the executable
-./build/GameRaylib
+cd build
+./GameRaylib
 ```
 
 ## 📷 Screenshots
